@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:32:51 by rnehme            #+#    #+#             */
-/*   Updated: 2025/10/31 14:38:31 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/05 17:44:23 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,10 @@ int	is_operator(char c)
 
 t_token	*handle_operator(char *line, int *i)
 {
-	if (line[*i] == '|')
-	{
-		(*i)++;
+	if (line[*i++] == '|') // concised from if line[*i] == '|' we increment the (*i)++ then we return...
 		return (create_token(PIPE, "|"));
-	}
 	else if (line[*i] == '>')
 	{
-		
 		if (line[*i + 1] == '>')
 		{
 			*i += 2;

@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:19:54 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/04 19:19:45 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/05 19:40:00 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*create_token(t_token_type token_type, char *value)
+t_token	*create_token(t_token_type token_type, char *value) // create a token
 {
 	t_token	*new;
 
@@ -22,27 +22,27 @@ t_token	*create_token(t_token_type token_type, char *value)
 	new->type = token_type;
 	new->value = ft_strdup(value);
 	if (!new->value)
-		return (free(new), NULL);
+		return (free(new), NULL); // if strdup failed it frees the previously allocated memmory and returns NULL
 	new->next = NULL;
 	return (new);
 }
 
-void	add_token(t_token **head, t_token *new)
+void	add_token(t_token **head, t_token *new) // add token...
 {
 	t_token	*current;
-	
-	if(!*head)
+
+	if (!*head)
 	{
 		*head = new;
 		return ;
 	}
 	current = *head;
-	while(current->next)
+	while (current->next)
 		current = current->next;
 	current->next = new;
 }
 
-void	free_tokens(t_token *head)
+void	free_tokens(t_token *head) // free func for tokens
 {
 	t_token	*temp;
 
@@ -55,7 +55,7 @@ void	free_tokens(t_token *head)
 	}
 }
 
-void	print_tokens(t_token *head)
+void	print_tokens(t_token *head) // debug func
 {
 	t_token	*current;
 	char	*type_str;
@@ -77,7 +77,6 @@ void	print_tokens(t_token *head)
 			type_str = "REDIR_OUT";
 		else
 			type_str = "UNKNOWN";
-
 		printf("[%s: \"%s\"] ", type_str, current->value);
 		current = current->next;
 	}
