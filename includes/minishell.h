@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/04 17:10:58 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/06 16:19:06 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,18 @@ void		add_cmd(t_cmd **head, t_cmd *new);
 t_cmd		*create_cmd(void);
 void		print_cmds(t_cmd *cmds);
 t_cmd		*parse(t_token *tokens);
+
+
+// ---------------- BUILTINS ----------------
+int builtin_echo(char **args);
+int builtin_pwd(void);
+int builtin_cd(char **args, t_shell *shell);
+int builtin_env(t_shell *shell);
+int builtin_export(char **args, t_shell *shell);
+int builtin_unset(char **args, t_shell *shell);
+int builtin_exit(char **args, t_shell *shell);
+int is_builtin(char *cmd);
+int run_builtin(char **args, t_shell *shell);
+
 
 #endif
