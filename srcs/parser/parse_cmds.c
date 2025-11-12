@@ -17,14 +17,14 @@ int is_redir(t_token_type type)
 	return (type == REDIR_APPEND || type == REDIR_IN ||
 			type == REDIR_OUT || type == HEREDOC);
 }
-
+// creates and adds the redir token
 static int handle_redir_token(t_cmd *cmd, t_token **tokens)
 {
 	t_token_type	redir_type;
 
 	redir_type = (*tokens)->type;
 	*tokens = (*tokens)->next;
-	if(*tokens && (*tokens)-> type == WORD)
+	if(*tokens && (*tokens)->type == WORD)
 	{
 		add_redir(&cmd->redirs, create_redir(redir_type, (*tokens)->value));
 		*tokens = (*tokens)->next;
@@ -46,13 +46,13 @@ static int fill_command_args(t_cmd *cmd, t_token **tokens)
 			cmd->args[i] = ft_strdup((*tokens)->value);
 			i++;
 			*tokens = (*tokens)->next;
-		}   
+		}
 		else if (is_redir((*tokens)->type))
 		{
 			if(!handle_redir_token(cmd, tokens))
 				return (0);
 		}
-		else
+		else // put here for safety for unexpected tokens that shoudln't be here
 			*tokens = (*tokens)->next;
 	}
 	cmd->args[i] = NULL;
@@ -64,14 +64,22 @@ t_cmd *parse_command(t_token **tokens)
 	t_cmd	*cmd;
 	int		arg_count;
 
+<<<<<<< HEAD
 	cmd = create_cmd(); // create a cmd struct 
 	if (!cmd)
 		return (NULL);
 	arg_count = count_args(*tokens); // returns the word tokens count
 	cmd->args = malloc(sizeof(char *) * (arg_count + 1)); // allocates mem for the array of args and + 1 for NULL (for later when we use the execve)
+=======
+	cmd = create_cmd(); // we creating the command structure 
+	if (!cmd)
+		return (NULL);
+	arg_count = count_args(*tokens); // counting args
+	cmd->args = malloc(sizeof(char *) * (arg_count + 1)); 
+>>>>>>> 01f89e7091707658f921556880fa014852306a14
 	if (!cmd->args)
-		return (free(cmd), NULL); 
-	if (!fill_command_args(cmd, tokens))
+		return (free(cmd), NULL);
+	if (!fill_command_args(cmd, tokens)) // filling commands
 		return (free_cmds(cmd), NULL);
 	return (cmd);
 }
