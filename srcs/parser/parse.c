@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 18:42:58 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/05 19:28:03 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/11 11:02:10 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_cmd	*parse(t_token *tokens) // main parse command that takest the whole tokens list
+// main parse command that takest the whole tokens list
+t_cmd	*parse(t_token *tokens) 
 {
 	t_cmd	*cmds;
 	t_cmd	*new_cmd;
