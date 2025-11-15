@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/11 11:31:21 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/14 19:39:11 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the 
 		// printf("before handle_operator: %c\n", line[*i]);
 		add_token(head, handle_operator(line, i));
 	}
-		
 	else if (line[*i] == '\'' || line[*i] == '"')
 	{
 		word = extract_quoted_word(line, i, line[*i]);
