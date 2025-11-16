@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/06 16:19:06 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/15 20:57:59 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
+#include <errno.h>
 # include <string.h>
 # include <stdio.h>
 # include <sys/wait.h>
@@ -61,7 +62,7 @@ typedef struct s_shell
 {
 	char	**envp;
 	t_cmd	*cmds;
-	int		last_exit_status;
+	int		last_exit_status;	
 }	t_shell;
 
 int			is_operator(char c);
@@ -92,9 +93,10 @@ int builtin_cd(char **args, t_shell *shell);
 int builtin_env(t_shell *shell);
 int builtin_export(char **args, t_shell *shell);
 int builtin_unset(char **args, t_shell *shell);
-int builtin_exit(char **args, t_shell *shell);
+int builtin_exit(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
 int is_builtin(char *cmd);
-int run_builtin(char **args, t_shell *shell);
-
+int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int get_path_index(char **envp, char *key);
+void free_2d(char **arr);
 
 #endif

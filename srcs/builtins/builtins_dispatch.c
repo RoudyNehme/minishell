@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:29 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/06 16:14:31 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/12 21:29:10 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int is_builtin(char *cmd)
 		|| !ft_strcmp(cmd, "exit"));
 }
 
-int run_builtin(char **args, t_shell *shell)
+int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds)
 {
 	if (!args || !args[0])
 		return (0);
@@ -39,6 +39,6 @@ int run_builtin(char **args, t_shell *shell)
 	if (!ft_strcmp(args[0], "unset"))
 		return (builtin_unset(args, shell));
 	if (!ft_strcmp(args[0], "exit"))
-		return (builtin_exit(args, shell));
+		return (builtin_exit(args, shell,line,tokens,cmds));
 	return (0);
 }
