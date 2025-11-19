@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/14 19:39:11 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/19 15:20:21 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the 
 		add_token(head, create_token(WORD, word)); // creates and adds the token
 		free(word);
 	}
-}
+	}
 
 t_token	*tokenizer(char *line) // takes the user input and loops until the end ('\0'); returns the head pointer to the first token of the list
 {

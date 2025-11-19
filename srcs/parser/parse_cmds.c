@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 15:12:40 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/15 21:38:22 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/18 19:14:03 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	handle_redir_token(t_cmd *cmd, t_token **tokens)
 
 	redir_type = (*tokens)->type;
 	*tokens = (*tokens)->next;
-	if (*tokens && (*tokens)->type == WORD)
+	if (*tokens && (*tokens)->type == WORD) // checks if the next token is not null and it is a file
 	{
 		add_redir(&cmd->redirs, create_redir(redir_type, (*tokens)->value));
 		*tokens = (*tokens)->next;
