@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/22 02:42:16 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/11/22 16:16:31 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/11/22 16:16:33 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -64,6 +65,11 @@ typedef struct s_shell
 	t_cmd	*cmds;
 	int		last_exit_status;	
 }	t_shell;
+
+#define SUCCESS 0
+#define ERROR_SYNTAX 2
+#define ERROR_CMD_NOT_FOUND 127
+#define ERROR_GENERAL 1
 
 int			is_operator(char c);
 void		free_tokens(t_token *head);

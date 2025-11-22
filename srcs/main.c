@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/25 19:29:11 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/22 02:29:33 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/11/22 16:17:10 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int main(int argc, char **argv, char **envp)
             printf("exit\n");
             break;
         }
-
         if (*line)
             add_history(line);
 
