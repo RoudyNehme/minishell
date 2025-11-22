@@ -6,7 +6,11 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/15 20:57:59 by rberdkan         ###   ########.fr       */
+=======
+/*   Updated: 2025/11/20 17:49:59 by rnehme           ###   ########.fr       */
+>>>>>>> origin/rnehme
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +69,11 @@ typedef struct s_shell
 	int		last_exit_status;	
 }	t_shell;
 
+#define SUCCESS 0
+#define ERROR_SYNTAX 2
+#define ERROR_CMD_NOT_FOUND 127
+#define ERROR_GENERAL 1
+
 int			is_operator(char c);
 void		free_tokens(t_token *head);
 void		add_token(t_token **head, t_token *new);
@@ -84,6 +93,7 @@ void		add_cmd(t_cmd **head, t_cmd *new);
 t_cmd		*create_cmd(void);
 void		print_cmds(t_cmd *cmds);
 t_cmd		*parse(t_token *tokens);
+void *expand_var(char *str, t_shell *shell);
 
 
 // ---------------- BUILTINS ----------------

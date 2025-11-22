@@ -6,7 +6,11 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:29:11 by rnehme            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/12 22:35:31 by rberdkan         ###   ########.fr       */
+=======
+/*   Updated: 2025/11/22 03:01:25 by rnehme           ###   ########.fr       */
+>>>>>>> origin/rnehme
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +38,6 @@ int main(int argc, char **argv, char **envp)
             printf("exit\n");
             break;
         }
-
         if (*line)
             add_history(line);
 
@@ -56,6 +59,8 @@ int main(int argc, char **argv, char **envp)
             free(line);
             continue;
         }
+
+        expand_commands(cmds, &shell);
 
         printf("\n--- PARSED COMMANDS ---\n");
         print_cmds(cmds);
