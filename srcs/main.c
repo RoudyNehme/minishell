@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:29:11 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/19 15:11:02 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/22 03:01:25 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int main(int argc, char **argv, char **envp)
             free(line);
             continue;
         }
+
+        expand_commands(cmds, &shell);
 
         printf("\n--- PARSED COMMANDS ---\n");
         print_cmds(cmds);
