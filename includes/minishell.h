@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/15 20:57:59 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/22 02:42:16 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int is_builtin(char *cmd);
 int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
 int get_path_index(char **envp, char *key);
 void free_2d(char **arr);
+char **dup_env(char **real_env);
+void set_env(char *key, char *value, t_shell *shell);
 
 #endif
