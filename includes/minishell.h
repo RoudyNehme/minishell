@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:24:13 by rnehme            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/11 11:58:23 by rnehme           ###   ########.fr       */
+=======
+/*   Updated: 2025/11/15 20:57:59 by rberdkan         ###   ########.fr       */
+>>>>>>> origin/dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +20,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
+#include <errno.h>
 # include <string.h>
 # include <stdio.h>
 # include <sys/wait.h>
@@ -61,7 +66,7 @@ typedef struct s_shell
 {
 	char	**envp;
 	t_cmd	*cmds;
-	int		last_exit_status;
+	int		last_exit_status;	
 }	t_shell;
 
 #define SUCCESS 0
@@ -88,5 +93,19 @@ void		add_cmd(t_cmd **head, t_cmd *new);
 t_cmd		*create_cmd(void);
 void		print_cmds(t_cmd *cmds);
 t_cmd		*parse(t_token *tokens);
+
+
+// ---------------- BUILTINS ----------------
+int builtin_echo(char **args);
+int builtin_pwd(void);
+int builtin_cd(char **args, t_shell *shell);
+int builtin_env(t_shell *shell);
+int builtin_export(char **args, t_shell *shell);
+int builtin_unset(char **args, t_shell *shell);
+int builtin_exit(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int is_builtin(char *cmd);
+int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int get_path_index(char **envp, char *key);
+void free_2d(char **arr);
 
 #endif

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:29:11 by rnehme            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/19 15:11:02 by rnehme           ###   ########.fr       */
+=======
+/*   Updated: 2025/11/12 22:35:31 by rberdkan         ###   ########.fr       */
+>>>>>>> origin/dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +26,7 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     shell.envp = envp;
+	shell.own_env = 0;
     shell.last_exit_status = 0;
 
     while (1)
