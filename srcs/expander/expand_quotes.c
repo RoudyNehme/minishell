@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:27:08 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/22 13:26:15 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/24 10:09:04 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ char *remove_quote(char *str)
 
 int main()
 {
-    char *str = "\"Helloo";
+    char *str = "echo Helloo";
     printf("%s\n", remove_quote(str));
 }
