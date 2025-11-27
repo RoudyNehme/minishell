@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/22 16:17:10 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/28 00:32:54 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int main(int argc, char **argv, char **envp)
         printf("\n--- PARSED COMMANDS ---\n");
         print_cmds(cmds);
 
+        expand_commands(cmds, &shell);
+
+        printf("\n--- AFTER EXPANSION ---\n");
+        print_cmds(cmds);
         // TODO: Execute
 // TEMPORARY BUILTIN TESTING
 	// TEMPORARY BUILTIN TESTING
