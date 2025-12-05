@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/19 15:20:21 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 13:38:51 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ static void	skip_whitespace(char *line, int *i) // skip whitespace func
 static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word 
 {
 	char	*word;
-	// printf("before is_operator: %c\n", line[*i]);
 	if (is_operator(line[*i]))
 	{
-		// printf("before handle_operator: %c\n", line[*i]);
 		add_token(head, handle_operator(line, i));
 	}
 	else if (line[*i] == '\'' || line[*i] == '"')

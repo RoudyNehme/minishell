@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:18:02 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/02 10:32:09 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 14:46:33 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static int should_expand_redirs(t_token_type type)
 static char *expand_arg(char *arg, t_shell *shell)
 {
 	char	*expanded;
-	char	*no_quotes;
+	char	*processed;
 	
 	expanded = expand_variable(arg, shell);
 	if (!expanded)
 		return (NULL);
-	no_quotes = remove_quote(expanded);
+	processed = handle_escapes(expanded);
 	free(expanded);
-	return(no_quotes);
+	return(processed);
 }
 
 static void expand_command_args(t_cmd *cmds, t_shell *shell)
@@ -38,13 +38,13 @@ static void expand_command_args(t_cmd *cmds, t_shell *shell)
 	int		i;
 
 	i = 0;
-	while(cmds->args[i])
+	while(cmds->args[i]) // looping on cmd args
 	{
 		expanded = expand_arg(cmds->args[i], shell);
 		if(expanded)
 		{
-			free(cmds->args[i]);
-			cmds->args[i] = expanded;
+			free(cmds->args[i]); // freeing the parsed command
+			cmds->args[i] = expanded; // and replacing it with the expanded one
 		}
 		i++;
 	}
@@ -61,7 +61,7 @@ static void expand_redirections(t_redir *redirs, t_shell *shell)
 			expanded = expand_arg(redirs->file, shell);
 			if(expanded)
 			{
-				free(redirs->file);
+				free(redirs->file); 
 				redirs->file = expanded;
 			}
 		}
@@ -74,7 +74,7 @@ void expand_commands(t_cmd *cmds, t_shell *shell)
 	t_cmd	*current;
 	
 	current = cmds;
-	while(current)
+	while(current) // looping over the parsed tokens
 	{
 		expand_command_args(current, shell);
 		if(current->redirs)

@@ -6,37 +6,26 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:27:08 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/28 00:42:41 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 13:52:52 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *remove_quote(char *str)
+char *handle_escapes(char *str)
 {
     int i;
     char *result;
-    char quote_flag;
     int j;
 
-    quote_flag = 0;
-    result = malloc(ft_strlen(str) + 1);
+    result = malloc(ft_strlen(str) + 1); // malloc'd string for the size of str plus null terminator
     if (!result)
         return (NULL);
     i = 0;
     j = 0;
     while (str[i])
     {
-        if (is_quote(str[i]) && (i == 0 || str[i - 1] != '\\')) // we make sure it's the start of the string so we don't check for i - 1 (otherwise we'd be checking out of bounds)
-        {
-            if (!quote_flag)
-                quote_flag = str[i];
-            else if (quote_flag == str[i])
-                quote_flag = 0;
-            else
-                result[j++] = str[i];
-        }
-        else if (str[i] == '\\' && i + 1 < ft_strlen(str))
+        if (str[i] == '\\' && str[i + 1]) // 
         {
             i++;
             result[j++] = str[i];

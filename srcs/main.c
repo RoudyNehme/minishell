@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/28 00:32:54 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 14:24:23 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int main(int argc, char **argv, char **envp)
 
         expand_commands(cmds, &shell);
 
-        printf("\n--- AFTER EXPANSION ---\n");
-        print_cmds(cmds);
+        // printf("\n--- AFTER EXPANSION ---\n");
+        // print_cmds(cmds);
         // TODO: Execute
 // TEMPORARY BUILTIN TESTING
 	// TEMPORARY BUILTIN TESTING
