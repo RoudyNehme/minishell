@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 20:57:33 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/05 21:24:11 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
 
-        printf("\n--- TOKENS ---\n");
-        print_tokens(tokens);
+      // printf("\n--- TOKENS ---\n");
+        //print_tokens(tokens);
 
         // Parse
         cmds = parse(tokens);
@@ -66,9 +66,9 @@ int main(int argc, char **argv, char **envp)
         // TODO: Execute
 // TEMPORARY BUILTIN TESTING
 	// TEMPORARY BUILTIN TESTING
-	if (cmds && cmds->args && is_builtin(cmds->args[0]))
+	if (cmds && cmds->args)
 	{
-    	run_builtin(cmds->args, &shell, line, tokens, cmds);
+	execute_single(cmds, &shell,line,tokens);
 	}
 	else
 	{

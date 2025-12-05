@@ -6,20 +6,34 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:29 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/12 21:29:10 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/25 12:37:41 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_builtin(char *cmd)
+
+int is_builtin(char *name)
 {
-	if (!cmd)
-		return (0);
-	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "pwd")
-		|| !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "env")
-		|| !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
-		|| !ft_strcmp(cmd, "exit"));
+    if (!name)
+        return (0);
+
+    if (ft_strcmp(name, "echo") == 0)
+        return (1);
+    if (ft_strcmp(name, "cd") == 0)
+        return (1);
+    if (ft_strcmp(name, "pwd") == 0)
+        return (1);
+    if (ft_strcmp(name, "export") == 0)
+        return (1);
+    if (ft_strcmp(name, "unset") == 0)
+        return (1);
+    if (ft_strcmp(name, "env") == 0)
+        return (1);
+    if (ft_strcmp(name, "exit") == 0)
+        return (1);
+
+    return (0);
 }
 
 int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds)
@@ -42,3 +56,4 @@ int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd 
 		return (builtin_exit(args, shell,line,tokens,cmds));
 	return (0);
 }
+

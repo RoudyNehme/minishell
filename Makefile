@@ -22,6 +22,11 @@ BUILTINS_SRCS = \
     srcs/builtins/unset.c \
     srcs/builtins/exit.c \
     srcs/builtins/builtins_dispatch.c \
+	srcs/executor/execute_single.c \
+	srcs/executor/redirection.c \
+	srcs/executor/utils_execution.c \
+	srcs/executor/ft_split_path.c \
+	srcs/executor/execution.c \
 
 # Main Minishell Sources
 SRCS = \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 16:16:31 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 13:56:04 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/05 18:02:36 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,14 @@ int get_path_index(char **envp, char *key);
 void free_2d(char **arr);
 char **dup_env(char **real_env);
 void set_env(char *key, char *value, t_shell *shell);
+
+// --------------- EXECUTION ------------------
+
+char	**ft_split_path(const char *path);
+int	count_cmds(t_cmd *cmd);
+char	**get_path(char **envp);
+char	*get_command_path(char *cmd, char **envp);
+void	apply_redirs_single(t_cmd *cmd);
+void execute_single(t_cmd *cmd, t_shell *shell, char *line, t_token *tokens);
 
 #endif
