@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 17:52:37 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/05 18:00:01 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -59,6 +60,10 @@ int main(int argc, char **argv, char **envp)
         printf("\n--- PARSED COMMANDS ---\n");
         print_cmds(cmds);
 
+        expand_commands(cmds, &shell);
+
+        // printf("\n--- AFTER EXPANSION ---\n");
+        // print_cmds(cmds);
         // TODO: Execute
 // TEMPORARY BUILTIN TESTING
 	// TEMPORARY BUILTIN TESTING

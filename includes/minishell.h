@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 16:16:31 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/26 17:17:22 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/05 18:02:36 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
-#include <errno.h>
+# include <errno.h>
 # include <string.h>
 # include <stdio.h>
 # include <sys/wait.h>
@@ -90,6 +90,13 @@ void		add_cmd(t_cmd **head, t_cmd *new);
 t_cmd		*create_cmd(void);
 void		print_cmds(t_cmd *cmds);
 t_cmd		*parse(t_token *tokens);
+int			is_valid_char(char c);
+int			is_quote(char c);
+char		*get_env_var(char *name, char **envp);
+char		*expand_variable(char *str, t_shell *shell);
+char		*handle_escapes(char *str);
+void		expand_commands(t_cmd *cmds, t_shell *shell);
+
 
 
 // ---------------- BUILTINS ----------------

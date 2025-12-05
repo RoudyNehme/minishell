@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:01:14 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/16 04:39:06 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 13:39:11 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*extract_word(char *line, int *i)
 	char	*word;
 
 	start = *i;
-	while (!is_seperator(line[*i])) // keep looping as long as *i is not a seperator
+	while (line[*i] && !is_seperator(line[*i]) && line[*i] != '\'' && line[*i] != '"') // keep looping as long as *i is not a seperator
 	{
 		if(line[*i] == '\\' && line[*i + 1])
 			(*i) += 2; // skip backlash and next char
@@ -41,18 +41,14 @@ char	*extract_word(char *line, int *i)
 	return (word);
 }
 
-static int	should_escape_in_dquotes(char c)
-{
-	return (c == '$' || c == '"' || c == '\\' || c == '`');
-}
-
 static void	handle_escape_in_quotes(char *line, int *i, char quote)
 {
 	// handle escape in double quotes only
 	if (quote == '"' && line[*i] == '\\' && line[*i + 1])
 	{
 		// escapes $ " \ `
-		if (should_escape_in_dquotes(line[*i + 1]))
+		if (line[*i + 1] == '$' || line[*i + 1] == '"'
+			|| line[*i + 1] == '\\' || line[*i + 1] == '`')
 			(*i) += 2; // skip backslash and escaped char
 		else
 			(*i)++; // backslash is literal
@@ -66,9 +62,10 @@ char	*extract_quoted_word(char *line, int *i, char quote)
 	int		start;
 	int		len;
 	char	*word;
+	int		j;
 
-	(*i)++; // skip opening quote
 	start = *i;
+	(*i)++; // skip opening quote
 
 	while (line[*i] && line[*i] != quote) // loop until end of line or ending quote
 		handle_escape_in_quotes(line, i, quote);
@@ -77,12 +74,17 @@ char	*extract_quoted_word(char *line, int *i, char quote)
 		printf("minishell: syntax error: unclosed quote\n");
 		return (NULL);
 	}
+	(*i)++;
 	len = *i - start;
 	word = malloc(len + 1);
 	if (!word)
 		return (NULL);
-	ft_strncpy(word, line + start, len);
+	j = 0;
+	while (j < len)
+	{
+		word[j] = line[start + j];
+		j++;
+	}
 	word[len] = '\0';
-	(*i)++;
 	return (word);
 }
