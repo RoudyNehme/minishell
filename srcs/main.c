@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 14:24:23 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 20:57:33 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     shell.envp = dup_env(envp);
+    shell.cmds = NULL;
     shell.last_exit_status = 0;
 
     while (1)

@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:18:33 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/05 13:40:09 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/05 20:46:24 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ static char *expand_vars_in_string(char *str, t_shell *shell)
 	return (result);
 }
 
-// ⭐ MAIN: Expand variables based on quote type
+// Expand variables based on quote type
 char *expand_variable(char *str, t_shell *shell)
 {
 	char quote_type;
@@ -175,16 +175,13 @@ char *expand_variable(char *str, t_shell *shell)
 	quote_type = get_quote_type(str);
 	// Case 1: Single quotes - NO expansion, just remove quotes
 	if (quote_type == '\'')
-	{
 		return (remove_outer_quotes(str));
-	}
 	// Case 2: Double quotes - expand, then remove quotes
 	if (quote_type == '"')
 	{
 		without_quotes = remove_outer_quotes(str);
 		if (!without_quotes)
 			return (NULL);
-
 		expanded = expand_vars_in_string(without_quotes, shell);
 		free(without_quotes);
 		return (expanded);
