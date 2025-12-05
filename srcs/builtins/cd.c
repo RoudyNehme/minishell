@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:14 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/15 00:19:10 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/11/23 19:30:21 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ char *get_HOME_path(char **envp)
 
 int get_path_index(char **envp, char *key)
 {
-    int	i;
-    int key_len;
-    
-    i = 0;
-    key_len = ft_strlen(key);
+    int i = 0;
+    int key_len = ft_strlen(key);
+
     while (envp[i])
     {
-        if (ft_strncmp(envp[i], key, key_len) == 0 
-            && envp[i][key_len] == '=')
-            return (i);
+        /* Case 1: KEY=VALUE */
+        if (ft_strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
+            return i;
+
+        /* Case 2: KEY (no value) */
+        if (ft_strcmp(envp[i], key) == 0)
+            return i;
+
         i++;
     }
-    return (-1);
+    return -1;
 }
 
 void free_2d(char **arr)
@@ -64,13 +67,25 @@ void	set_env(char *key, char *path, t_shell *shell)
     char	*final_join;
     int		index;
     
-    temp_join = ft_strjoin(key, "=");
-    if (!temp_join)
-        return ;
-    final_join = ft_strjoin(temp_join, path);
-    free(temp_join);
-    if (!final_join)
-        return ;
+/* Case 1: export KEY  → path == NULL  → store only "KEY" */
+	if (path == NULL)
+	{
+		final_join = ft_strdup(key);
+		if (!final_join)
+			return;
+	}
+	/* Case 2: export KEY=VALUE → build KEY=VALUE */
+	else
+	{
+		temp_join = ft_strjoin(key, "=");
+		if (!temp_join)
+			return;
+		final_join = ft_strjoin(temp_join, path);
+		free(temp_join);
+		if (!final_join)
+			return;
+	}
+
     index = get_path_index(shell->envp, key);
     if (index != -1)
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:18:33 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/19 15:21:55 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/11/22 20:45:54 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int main(void)
         "SHELL=/bin/bash",
         NULL};
 
-    shell.envp = envp;
+    shell.envp = dup_env(envp);
 
     printf("Input: $USER → %s\n", expan_var("$USER", &shell));
     printf("Input: $HOME → %s\n", expan_var("$HOME", &shell));

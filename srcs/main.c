@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:17:08 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/22 16:17:10 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:52:37 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     shell.envp = dup_env(envp);
+	shell.cmds = NULL;
     shell.last_exit_status = 0;
 
     while (1)
@@ -43,8 +44,8 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
 
-        printf("\n--- TOKENS ---\n");
-        print_tokens(tokens);
+      // printf("\n--- TOKENS ---\n");
+        //print_tokens(tokens);
 
         // Parse
         cmds = parse(tokens);
@@ -61,9 +62,9 @@ int main(int argc, char **argv, char **envp)
         // TODO: Execute
 // TEMPORARY BUILTIN TESTING
 	// TEMPORARY BUILTIN TESTING
-	if (cmds && cmds->args && is_builtin(cmds->args[0]))
+	if (cmds && cmds->args)
 	{
-    	run_builtin(cmds->args, &shell, line, tokens, cmds);
+	execute_single(cmds, &shell,line,tokens);
 	}
 	else
 	{
