@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/05 13:38:51 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/06 00:05:55 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,14 @@ static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the 
 {
 	char	*word;
 	if (is_operator(line[*i]))
-	{
 		add_token(head, handle_operator(line, i));
-	}
-	else if (line[*i] == '\'' || line[*i] == '"')
+	else if (!is_seperator(line[*i]))
 	{
-		word = extract_quoted_word(line, i, line[*i]);
-		if (word)
-		{
-			add_token(head, create_token(WORD, word)); // creates and adds the token
-			free(word);
-		}
-	}
-	else
-	{
-		word = extract_word(line, i);
-		add_token(head, create_token(WORD, word)); // creates and adds the token
+		word = extract_full_word(line, i);
+		add_token(head, create_token(WORD, word));
 		free(word);
 	}
-	}
+}
 
 t_token	*tokenizer(char *line) // takes the user input and loops until the end ('\0'); returns the head pointer to the first token of the list
 {

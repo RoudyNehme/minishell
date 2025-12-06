@@ -41,6 +41,7 @@ SRCS = \
     srcs/parser/parse_free.c \
     srcs/parser/print_parse.c \
     srcs/expander/expand.c \
+    srcs/expander/expand_variables_main.c \
     srcs/expander/expand_variables.c \
     srcs/expander/expand_utils.c \
     srcs/expander/expand_quotes.c \

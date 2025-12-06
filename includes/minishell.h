@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 18:02:36 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/06 15:39:25 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_token		*create_token(t_token_type token_type, char *value);
 void		free_tokens(t_token *head);
 t_token		*handle_operator(char *line, int *i);
 char		*extract_word(char *line, int *i);
-char		*extract_quoted_word(char *line, int *i, char quote);
+char		*extract_full_word(char *line, int *i);
 t_token		*tokenizer(char *line);
 void		print_tokens(t_token *head);
 t_cmd		*parse_command(t_token **tokens);
@@ -90,12 +90,15 @@ void		add_cmd(t_cmd **head, t_cmd *new);
 t_cmd		*create_cmd(void);
 void		print_cmds(t_cmd *cmds);
 t_cmd		*parse(t_token *tokens);
-int			is_valid_char(char c);
-int			is_quote(char c);
-char		*get_env_var(char *name, char **envp);
 char		*expand_variable(char *str, t_shell *shell);
 char		*handle_escapes(char *str);
 void		expand_commands(t_cmd *cmds, t_shell *shell);
+int			is_seperator(char c);
+int			is_valid_var_char(char c);
+char		*get_env_value(char *name, char **envp);
+char		*expand_exit_status(char **result, int *i, t_shell *shell);
+char		*expand_env_var(char **result, char *str, int *i, t_shell *shell);
+int			should_expand(char *str, int i);
 
 
 
