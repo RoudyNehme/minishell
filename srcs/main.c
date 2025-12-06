@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/05 18:00:01 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:59:41 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
 
-      // printf("\n--- TOKENS ---\n");
-        //print_tokens(tokens);
+      printf("\n--- TOKENS ---\n");
+        print_tokens(tokens);
 
         // Parse
         cmds = parse(tokens);
