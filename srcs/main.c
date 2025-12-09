@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/06 05:57:34 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/08 11:03:58 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int main(int argc, char **argv, char **envp)
 	// TEMPORARY BUILTIN TESTING
 	if (cmds && cmds->args)
 	{
-	execute_single(cmds, &shell,line,tokens);
+	    execute_single(cmds, &shell,line,tokens);
 	}
 	else
 	{

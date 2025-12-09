@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:25:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/06 15:26:06 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/09 14:10:36 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static char *process_dollar(char *result, char *str, int *i, t_shell *shell)
 
 char *expand_variable(char *str, t_shell *shell)
 {
-    char *result;
-    int i;
+    char    *result;
+    int     i;
 
-    result = ft_strdup("");
+    result = ft_strdup(""); // cleaner than manually allocating plus null terminated
     if (!result)
         return (NULL);
     i = 0;

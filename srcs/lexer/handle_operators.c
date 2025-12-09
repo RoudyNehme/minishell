@@ -6,16 +6,11 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:32:51 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/15 21:43:23 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/09 10:19:22 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
 
 static t_token *handle_redirect_out(char *line, int *i)
 {
