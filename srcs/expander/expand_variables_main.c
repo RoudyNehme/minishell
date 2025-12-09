@@ -28,6 +28,11 @@ static char *process_dollar(char *result, char *str, int *i, t_shell *shell)
 {
     if (str[*i + 1] == '?')
         result = expand_exit_status(&result, i, shell);
+    else if (ft_isdigit(str[*i + 1]))
+    {
+        (*i)++;
+        result = print_var_after_nb(&result, str, i, shell);
+    }
     else
         result = expand_env_var(&result, str, i, shell);
     return (result);
