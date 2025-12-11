@@ -27,6 +27,8 @@ BUILTINS_SRCS = \
 	srcs/executor/utils_execution.c \
 	srcs/executor/ft_split_path.c \
 	srcs/executor/execution.c \
+	srcs/executor/heredoc.c \
+	srcs/executor/signals.c \
 
 # Main Minishell Sources
 SRCS = \
@@ -41,6 +43,7 @@ SRCS = \
     srcs/parser/parse_free.c \
     srcs/parser/print_parse.c \
     srcs/expander/expand.c \
+    srcs/expander/expand_variables_main.c \
     srcs/expander/expand_variables.c \
     srcs/expander/expand_utils.c \
     srcs/expander/expand_quotes.c \

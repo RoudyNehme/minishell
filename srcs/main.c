@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/06 16:59:41 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/06 19:04:59 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/10 23:09:20 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -23,12 +22,24 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     shell.envp = dup_env(envp);
-	shell.cmds = NULL;
+    shell.cmds = NULL;
     shell.last_exit_status = 0;
 
     while (1)
     {
+
+		signal(SIGINT, sigint_prompt_handler);
+		signal(SIGQUIT, SIG_IGN);
+		
         line = readline("minishell> ");
+
+		if (g_signal == SIGINT)
+		{
+			shell.last_exit_status = 130;
+			g_signal = 0;
+			continue;
+		}
+
 
         if (!line)
         {
@@ -44,9 +55,8 @@ int main(int argc, char **argv, char **envp)
             free(line);
             continue;
         }
-
-      printf("\n--- TOKENS ---\n");
-        print_tokens(tokens);
+        // printf("\n--- TOKENS ---\n");
+        // print_tokens(tokens);
 
         // Parse
         cmds = parse(tokens);
@@ -57,8 +67,8 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
 
-        printf("\n--- PARSED COMMANDS ---\n");
-        print_cmds(cmds);
+        // printf("\n--- PARSED COMMANDS ---\n");
+        // print_cmds(cmds);
 
         expand_commands(cmds, &shell);
 
@@ -69,13 +79,11 @@ int main(int argc, char **argv, char **envp)
 	// TEMPORARY BUILTIN TESTING
 	if (cmds && cmds->args)
 	{
-	execute_single(cmds, &shell,line,tokens);
+		//int should_expand;
+		//process_heredocs(cmds,&shell);
+		execute_single(cmds, &shell,line,tokens);
 	}
-	else
-	{
-    	printf("Not a builtin (execution not implemented yet)\n");
-	}
-        // Clean up
+	    // Clean up
         free_cmds(cmds);
         free_tokens(tokens);
         free(line);

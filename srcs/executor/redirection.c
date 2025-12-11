@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:06:26 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/26 15:30:32 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/07 01:22:15 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	apply_redirs_single(t_cmd *cmd)
 		}
 		else if (cmd_red->type == HEREDOC)
 		{
-			//-----will be implemented later------//
+			
 		}
 		cmd_red = cmd_red->next;
 	}
