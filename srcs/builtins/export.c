@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:32 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/22 22:45:29 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:11:09 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,9 @@ void	print_export(char **envp)
     char *value = get_value(envp_copy[i]);  // NULL if no '=' exists
 
     if (value == NULL)
-    {
         printf("declare -x %s\n", key);
-    }
     else
-    {
         printf("declare -x %s=\"%s\"\n", key, value);
-    }
     free(key);
     if (value)
         free(value);
@@ -144,17 +140,13 @@ int builtin_export(char **args, t_shell *shell)
 				i++;
 				continue;
 			}
-
 			set_env(key, value, shell);
 
 			free(key);
 			if (value)
 				free(value);
-
         }
-
         i++;
     }
-
     return shell->last_exit_status;
 }

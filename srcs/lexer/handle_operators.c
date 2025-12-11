@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:32:51 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/09 10:19:22 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/10 10:18:16 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_token *handle_operator(char *line, int *i)
 		(*i)++;
 		return (create_token(PIPE, "|"));
 	}
-	else if (line[*i] == '>') // checks if the *i is a redir
+	else if (line[*i] == '>')
 		return (handle_redirect_out(line, i));
 	else if (line[*i] == '<')
 		return (handle_redirect_in(line, i));
