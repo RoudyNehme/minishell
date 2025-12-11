@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/10 23:06:39 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/11 17:37:12 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/11 17:37:14 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ typedef enum token_type
 	REDIR_OUT,
 	REDIR_APPEND,
 	HEREDOC,
-	ENV_VAR,
-	SQUOTE,
-	DQUOTE
 }	t_token_type;
 
 typedef struct s_token
@@ -64,7 +61,7 @@ typedef struct s_shell
 {
 	char	**envp;
 	t_cmd	*cmds;
-	int		last_exit_status;	
+	int		last_exit_status;
 }	t_shell;
 
 #define SUCCESS 0
@@ -80,7 +77,6 @@ void		add_token(t_token **head, t_token *new);
 t_token		*create_token(t_token_type token_type, char *value);
 void		free_tokens(t_token *head);
 t_token		*handle_operator(char *line, int *i);
-char		*extract_word(char *line, int *i);
 char		*extract_full_word(char *line, int *i);
 t_token		*tokenizer(char *line);
 void		print_tokens(t_token *head);

@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/06 00:05:55 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/09 13:30:59 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,26 @@ static void	skip_whitespace(char *line, int *i) // skip whitespace func
 		(*i)++;
 }
 
-static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word 
+static int bad_operator(char c)
+{
+	return (c == '|' || c == '.' || c == '\\' || c == '/');
+}
+
+	static void
+	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word
 {
 	char	*word;
+
 	if (is_operator(line[*i]))
 		add_token(head, handle_operator(line, i));
 	else if (!is_seperator(line[*i]))
 	{
 		word = extract_full_word(line, i);
-		add_token(head, create_token(WORD, word));
-		free(word);
+		if (word)
+		{
+			add_token(head, create_token(WORD, word));
+			free(word);
+		}
 	}
 }
 
@@ -43,6 +53,13 @@ t_token	*tokenizer(char *line) // takes the user input and loops until the end (
 		skip_whitespace(line, &i);
 		if (!line[i])
 			break ;
+		if (bad_operator(line[i]) && !line[i + 1]) // temp until pipes are done so we can test
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
+			ft_putchar_fd(line[i], 2);
+			ft_putstr_fd("'\n", 2);
+			break ;
+		}
 		tokenizer_helper(&head, line, &i);
 	}
 	return (head);

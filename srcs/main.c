@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/06 19:04:59 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/10 23:09:20 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/11 17:37:01 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/11 17:37:52 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ int main(int argc, char **argv, char **envp)
 	// TEMPORARY BUILTIN TESTING
 	if (cmds && cmds->args)
 	{
-		//int should_expand;
-		//process_heredocs(cmds,&shell);
-		execute_single(cmds, &shell,line,tokens);
+	    execute_single(cmds, &shell,line,tokens);
 	}
 	    // Clean up
         free_cmds(cmds);
