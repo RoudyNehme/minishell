@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 17:59:58 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/12 09:55:21 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/13 16:56:35 by rnehme            #+#    #+#             */
+/*   Updated: 2025/12/13 16:56:36 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,19 @@ int main(int argc, char **argv, char **envp)
 
     while (1)
     {
+
+		signal(SIGINT, sigint_prompt_handler);
+		signal(SIGQUIT, SIG_IGN);
+		
         line = readline("minishell> ");
+
+		if (g_signal == SIGINT)
+		{
+			shell.last_exit_status = 130;
+			g_signal = 0;
+			continue;
+		}
+
 
         if (!line)
         {
@@ -43,7 +55,6 @@ int main(int argc, char **argv, char **envp)
             free(line);
             continue;
         }
-
         // printf("\n--- TOKENS ---\n");
         // print_tokens(tokens);
 
@@ -68,11 +79,7 @@ int main(int argc, char **argv, char **envp)
 	{
 	    execute_single(cmds, &shell,line,tokens);
 	}
-	else
-	{
-    	printf("Not a builtin (execution not implemented yet)\n");
-	}
-        // Clean up
+	    // Clean up
         free_cmds(cmds);
         free_tokens(tokens);
         free(line);

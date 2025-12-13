@@ -28,6 +28,8 @@ BUILTINS_SRCS = \
 	srcs/executor/utils_execution.c \
 	srcs/executor/ft_split_path.c \
 	srcs/executor/execution.c \
+	srcs/executor/heredoc.c \
+	srcs/executor/signals.c \
 
 # Main Minishell Sources
 SRCS = \

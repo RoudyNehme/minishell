@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/12 18:30:24 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/13 16:56:20 by rnehme            #+#    #+#             */
+/*   Updated: 2025/12/13 16:56:22 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -24,6 +23,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 typedef enum token_type
 {
@@ -67,6 +67,8 @@ typedef struct s_shell
 #define ERROR_SYNTAX 2
 #define ERROR_CMD_NOT_FOUND 127
 #define ERROR_GENERAL 1
+
+extern int g_signal; 
 
 int			is_operator(char c);
 void		free_tokens(t_token *head);
@@ -123,5 +125,10 @@ char	**get_path(char **envp);
 char	*get_command_path(char *cmd, char **envp);
 void	apply_redirs_single(t_cmd *cmd);
 void execute_single(t_cmd *cmd, t_shell *shell, char *line, t_token *tokens);
+int has_heredoc(t_cmd *cmd_list);
+int process_heredocs(t_cmd *cmd_list, t_shell *shell);
 
+
+//----------------SIGNALS -----------------
+void sigint_prompt_handler(int sig);
 #endif
