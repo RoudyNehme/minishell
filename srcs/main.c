@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/13 16:56:35 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/13 16:56:36 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/11 17:37:01 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/13 16:59:54 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,35 @@ int main(int argc, char **argv, char **envp)
     shell.cmds = NULL;
     shell.last_exit_status = 0;
 
-    while (1)
+    signal(SIGINT, sigint_prompt_handler);
+    signal(SIGQUIT, SIG_IGN);
+
+   while (1)
+{
+    line = readline("minishell> ");
+
+    if (!line)
     {
-
-		signal(SIGINT, sigint_prompt_handler);
-		signal(SIGQUIT, SIG_IGN);
-		
-        line = readline("minishell> ");
-
-		if (g_signal == SIGINT)
-		{
-			shell.last_exit_status = 130;
-			g_signal = 0;
-			continue;
-		}
-
-
-        if (!line)
-        {
-            printf("exit\n");
-            break;
-        }
-        if (*line)
-            add_history(line);
-
+        printf("exit\n");
+        break;
+    }
+    if (g_signal == SIGINT)
+    {
+        shell.last_exit_status = 130;
+        g_signal = 0;
+        if (line && *line)
+            free(line);
+        continue;
+    }
+    	if (*line)
+        add_history(line);
         tokens = tokenizer(line);
         if (!tokens)
         {
             free(line);
             continue;
         }
-        // printf("\n--- TOKENS ---\n");
-        // print_tokens(tokens);
 
-        // Parse
         cmds = parse(tokens);
         if (!cmds)
         {
@@ -67,23 +62,25 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
 
-        // printf("\n--- PARSED COMMANDS ---\n");
-        // print_cmds(cmds);
-
         expand_commands(cmds, &shell);
 
-        // printf("\n--- AFTER EXPANSION ---\n");
-        // print_cmds(cmds);
-        // TODO: Execute
-	if (cmds && cmds->args)
-	{
-	    execute_single(cmds, &shell,line,tokens);
-	}
-	    // Clean up
+        if (cmds && cmds->args)
+        {
+            if (process_heredocs(cmds, &shell) != 0)
+            {
+                g_signal = 0;
+                free_cmds(cmds);
+                free_tokens(tokens);
+                free(line);
+                continue;
+            }
+			if(cmds->next == NULL)
+            	execute_single(cmds, &shell, line, tokens);
+        }
+
         free_cmds(cmds);
         free_tokens(tokens);
         free(line);
     }
-
-    return (0);
+    return (shell.last_exit_status);
 }
