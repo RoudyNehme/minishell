@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 18:02:34 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/10 13:49:16 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/12 18:30:24 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int get_path_index(char **envp, char *key);
 void free_2d(char **arr);
 char **dup_env(char **real_env);
 void set_env(char *key, char *value, t_shell *shell);
+char *build_env_string(char *key, char *path);
+char *get_HOME_path(char **envp);
 
 // --------------- EXECUTION ------------------
 
