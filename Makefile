@@ -17,9 +17,11 @@ BUILTINS_SRCS = \
     srcs/builtins/echo.c \
     srcs/builtins/pwd.c \
     srcs/builtins/env.c \
+    srcs/builtins/env_utils.c \
     srcs/builtins/cd_utils.c \
     srcs/builtins/cd.c \
     srcs/builtins/export.c \
+    srcs/builtins/export_utils.c \
     srcs/builtins/unset.c \
     srcs/builtins/exit.c \
     srcs/builtins/builtins_dispatch.c \
@@ -48,6 +50,7 @@ SRCS = \
     srcs/expander/expand_variables.c \
     srcs/expander/expand_utils.c \
     srcs/expander/expand_quotes.c \
+    srcs/utils/ft_atoll.c \
     $(BUILTINS_SRCS)
 
 OBJS = $(SRCS:.c=.o)

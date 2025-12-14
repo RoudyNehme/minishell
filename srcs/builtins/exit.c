@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:50 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/22 02:54:42 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/14 18:05:51 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
-char **dup_env(char **real_env)
-{
-	int size;
-
-	size = 0;
-	while (real_env[size])
-		size++;
-	char **copy_env;
-	
-	copy_env = malloc(sizeof(char *) * (size + 1));
-	if(!copy_env)
-		return (NULL);
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		copy_env[i] = ft_strdup(real_env[i]);
-		i++;
-	}
-	copy_env[size] = NULL;
-	return (copy_env);
-}
 
 int	ft_is_numeric(char *str)
 {

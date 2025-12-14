@@ -5,13 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< Updated upstream
 /*   Created: 2025/12/13 16:56:20 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/13 16:56:22 by rnehme           ###   ########.fr       */
-=======
-/*   Created: 2025/12/11 17:37:12 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 02:23:44 by rberdkan         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/12/14 17:56:52 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 
 typedef enum token_type
 {
@@ -121,6 +117,19 @@ char **dup_env(char **real_env);
 void set_env(char *key, char *value, t_shell *shell);
 char *build_env_string(char *key, char *path);
 char *get_HOME_path(char **envp);
+void print_export(char **envp);
+int check_arg_validity_export(char *arg);
+char *get_key(char *str);
+char *get_value(char *str);
+void free_resources(t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+void exit_shell(int code, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int is_numeric(const char *str);
+int calculate_exit_code(const char *arg);
+long long ft_atoll(const char *str);
+void free_resources(t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+void exit_shell(int code, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int is_valid_number(const char *str, int *exit_code);
+int wrap_exit_code(const char *arg);
 
 // --------------- EXECUTION ------------------
 

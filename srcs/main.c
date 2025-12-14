@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:37:01 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 16:59:54 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/14 01:51:15 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int main(int argc, char **argv, char **envp)
     	if (*line)
         add_history(line);
         tokens = tokenizer(line);
+        print_tokens(tokens);
         if (!tokens)
         {
             free(line);
@@ -55,6 +56,7 @@ int main(int argc, char **argv, char **envp)
         }
 
         cmds = parse(tokens);
+        print_cmds(cmds);
         if (!cmds)
         {
             free_tokens(tokens);
