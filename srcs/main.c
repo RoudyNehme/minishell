@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:37:01 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/14 01:51:15 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/15 15:41:13 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **envp)
     	if (*line)
         add_history(line);
         tokens = tokenizer(line);
-        print_tokens(tokens);
+       // print_tokens(tokens);
         if (!tokens)
         {
             free(line);
@@ -56,30 +56,36 @@ int main(int argc, char **argv, char **envp)
         }
 
         cmds = parse(tokens);
-        print_cmds(cmds);
+       // print_cmds(cmds);
         if (!cmds)
         {
             free_tokens(tokens);
             free(line);
             continue;
         }
-
+		// print_cmds(cmds);
+		// print_tokens(tokens);
         expand_commands(cmds, &shell);
-
-        if (cmds && cmds->args)
-        {
-            if (process_heredocs(cmds, &shell) != 0)
-            {
-                g_signal = 0;
-                free_cmds(cmds);
-                free_tokens(tokens);
-                free(line);
-                continue;
-            }
-			if(cmds->next == NULL)
-            	execute_single(cmds, &shell, line, tokens);
-        }
-
+		if (cmds && cmds->args)
+		{
+			if (process_heredocs(cmds, &shell) != 0)
+			{
+				g_signal = 0;
+				free_cmds(cmds);
+				free_tokens(tokens);
+				free(line);
+				continue;
+			}
+			//write(2, "\n=== MAIN: AFTER HEREDOC ===\n", 30);
+			//write(2, "About to execute pipeline\n", 26);
+			
+			// Execute based on number of commands
+			if (cmds->next == NULL)
+				execute_single(cmds, &shell, line, tokens);
+			else
+				execute_pipeline(cmds, &shell, line, tokens);
+			g_signal = 0;
+		}
         free_cmds(cmds);
         free_tokens(tokens);
         free(line);

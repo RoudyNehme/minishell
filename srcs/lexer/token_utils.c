@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:19:54 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/09 10:21:37 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/15 13:52:18 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ int is_seperator(char c) // returns 1 if c is any of the seperators
 {
 	return (c == ' ' || c == '\t' || c == '|' || c == '>' || c == '<' || c == '\0');
 }
-
+// old version
+// int is_operator(char c)
+// {
+// 	return (c == '<' || c == '>');
+// }
 int is_operator(char c)
 {
-	return (c == '<' || c == '>');
+    return (c == '<' || c == '>' || c == '|');  // ✓ Include pipe
 }
 
 t_token	*create_token(t_token_type token_type, char *value) // create a token

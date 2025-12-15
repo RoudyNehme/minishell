@@ -29,7 +29,7 @@ BUILTINS_SRCS = \
 	srcs/executor/redirection.c \
 	srcs/executor/utils_execution.c \
 	srcs/executor/ft_split_path.c \
-	srcs/executor/execution.c \
+	srcs/executor/execution_pipeline.c \
 	srcs/executor/heredoc.c \
 	srcs/executor/signals.c \
 

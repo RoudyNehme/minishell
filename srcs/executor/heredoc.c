@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 20:27:09 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 02:56:40 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:40:53 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,8 @@ int process_heredocs(t_cmd *cmd_list, t_shell *shell)
         }
         current_cmd = current_cmd->next;
     }
+	//write(2, "\n=== HEREDOC COMPLETE ===\n", 26);
+    //write(2, "About to return from process_heredocs\n", 38);
     return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:32:51 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 10:18:16 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/15 13:57:47 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,31 @@ static t_token *handle_redirect_in(char *line, int *i)
 	(*i)++;
 	return (create_token(REDIR_IN, "<"));
 }
-
+// old version 
+// t_token *handle_operator(char *line, int *i)
+// {
+// 	if (line[*i] == '|')
+// 	{
+// 		(*i)++;
+// 		return (create_token(PIPE, "|"));
+// 	}
+// 	else if (line[*i] == '>')
+// 		return (handle_redirect_out(line, i));
+// 	else if (line[*i] == '<')
+// 		return (handle_redirect_in(line, i));
+// 	return (NULL);
+// }
 t_token *handle_operator(char *line, int *i)
 {
-	if (line[*i] == '|')
-	{
-		(*i)++;
-		return (create_token(PIPE, "|"));
-	}
-	else if (line[*i] == '>')
-		return (handle_redirect_out(line, i));
-	else if (line[*i] == '<')
-		return (handle_redirect_in(line, i));
-	return (NULL);
+    if (line[*i] == '<')
+        return (handle_redirect_in(line, i));
+    else if (line[*i] == '>')
+        return (handle_redirect_out(line, i));
+    else if (line[*i] == '|')
+    {
+        (*i)++;
+        return (create_token(PIPE, "|"));
+    }
+    
+    return (NULL);
 }

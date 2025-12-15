@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/13 16:56:20 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/14 17:56:52 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/13 18:16:07 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/15 13:46:50 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -141,7 +143,7 @@ void	apply_redirs_single(t_cmd *cmd);
 void execute_single(t_cmd *cmd, t_shell *shell, char *line, t_token *tokens);
 int has_heredoc(t_cmd *cmd_list);
 int process_heredocs(t_cmd *cmd_list, t_shell *shell);
-
+void execute_pipeline(t_cmd *cmd_list, t_shell *shell, char *line, t_token *tokens);
 
 //----------------SIGNALS -----------------
 void sigint_prompt_handler(int sig);

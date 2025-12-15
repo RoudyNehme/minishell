@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:14:57 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/27 14:46:41 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/13 21:15:09 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ else
 	}
 	if (pid == 0)
 	{
-		// CHILD
 		if (!cmd->args || !cmd->args[0])
-			exit(0); // only redirs, no command
+			exit(0);
 
 		apply_redirs_single(cmd);
 

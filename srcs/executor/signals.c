@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 22:28:18 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 02:33:47 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:30:09 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void sigint_prompt_handler(int sig)
 {
     g_signal = sig;
     write(1, "\n", 1);
-    rl_on_new_line();
+    rl_on_new_line(); //pause, 
     rl_replace_line("", 0);
     rl_redisplay();
 }
