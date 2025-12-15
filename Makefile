@@ -24,6 +24,7 @@ BUILTINS_SRCS = \
     srcs/builtins/export_utils.c \
     srcs/builtins/unset.c \
     srcs/builtins/exit.c \
+    srcs/builtins/exit_utils.c \
     srcs/builtins/builtins_dispatch.c \
 	srcs/executor/execute_single.c \
 	srcs/executor/redirection.c \

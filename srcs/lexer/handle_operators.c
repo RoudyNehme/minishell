@@ -58,6 +58,5 @@ t_token *handle_operator(char *line, int *i)
         (*i)++;
         return (create_token(PIPE, "|"));
     }
-    
     return (NULL);
 }

@@ -23,8 +23,7 @@ static int bad_operator(char c)
 	return (c == '|' || c == '.' || c == '\\' || c == '/');
 }
 
-	static void
-	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word
+static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word
 {
 	char	*word;
 

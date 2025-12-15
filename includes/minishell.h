@@ -132,6 +132,8 @@ void free_resources(t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
 void exit_shell(int code, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
 int is_valid_number(const char *str, int *exit_code);
 int wrap_exit_code(const char *arg);
+int	ft_is_valid_long_long(char *str, long long *result);
+void	cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell);
 
 // --------------- EXECUTION ------------------
 
