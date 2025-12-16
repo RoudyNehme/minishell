@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 21:22:31 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 16:17:25 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:02:14 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int get_var_name_len(char *str)
+static int	get_var_name_len(char *str)
 {
 	int	len;
 
@@ -22,7 +22,7 @@ static int get_var_name_len(char *str)
 	return (len);
 }
 
-char *expand_exit_status(char **result, int *i, t_shell *shell)
+char	*expand_exit_status(char **result, int *i, t_shell *shell)
 {
 	char	*status_str;
 	char	*temp;
@@ -37,7 +37,7 @@ char *expand_exit_status(char **result, int *i, t_shell *shell)
 	return (temp);
 }
 
-char *expand_env_var(char **result, char *str, int *i, t_shell *shell)
+char	*expand_env_var(char **result, char *str, int *i, t_shell *shell)
 {
 	int		var_len;
 	char	*var_name;
@@ -66,7 +66,7 @@ char *expand_env_var(char **result, char *str, int *i, t_shell *shell)
 	return (*result);
 }
 
-int should_expand(char *str, int i)
+int	should_expand(char *str, int i)
 {
 	int	in_single_quote;
 	int	j;

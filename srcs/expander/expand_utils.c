@@ -6,19 +6,19 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:27:29 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 16:15:58 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:02:28 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_valid_var_char(char c)
+int	is_valid_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
 }
 
 // Get environment variable value
-char *get_env_value(char *name, char **envp)
+char	*get_env_value(char *name, char **envp)
 {
 	int	i;
 	int	len;

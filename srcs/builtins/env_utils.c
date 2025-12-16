@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 08:58:08 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 12:33:16 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:46:30 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,6 @@ static void	update_existing_env(t_shell *shell, int index, char *entry)
 	free(shell->envp[index]);
 	shell->envp[index] = entry;
 }
-
-typedef struct s_norminette // afyad brilliant suggestion XD
-{
-	char	**new_envp;
-	int		size;
-	int		i;
-}	t_norminette;
 
 static void	append_env(t_shell *shell, char *entry)
 {

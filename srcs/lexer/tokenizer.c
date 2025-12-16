@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/15 01:11:31 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:00:36 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	skip_whitespace(char *line, int *i) // skip whitespace func
 		(*i)++;
 }
 
-static int bad_operator(char c)
+static int	bad_operator(char c)
 {
 	return (c == '|' || c == '.' || c == '\\' || c == '/');
 }

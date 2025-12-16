@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 18:16:07 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 12:44:51 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:46:44 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ typedef struct s_cleanup_data
 	t_token	*tokens;
 	t_cmd	*cmds;
 }	t_cleanup_data;
+
+typedef struct s_norminette
+{
+	char **new_envp;
+	int size;
+	int i;
+} t_norminette;
 
 #define SUCCESS 0
 #define ERROR_SYNTAX 2

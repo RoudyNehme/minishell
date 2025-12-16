@@ -6,19 +6,20 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:18:02 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 14:13:55 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 15:03:25 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int should_expand_redir(t_token_type type)
+static int	should_expand_redir(t_token_type type)
 {
-	return (type == REDIR_IN ||
-			type == REDIR_OUT ||
-			type == REDIR_APPEND);
+	return (type == REDIR_IN
+		|| type == REDIR_OUT
+		|| type == REDIR_APPEND);
 }
-static char *expand_arg(char *arg, t_shell *shell)
+
+static char	*expand_arg(char *arg, t_shell *shell)
 {
 	char	*expanded;
 	char	*no_quotes;
@@ -31,10 +32,10 @@ static char *expand_arg(char *arg, t_shell *shell)
 	return (no_quotes);
 }
 
-static void expand_command_args(t_cmd *cmd, t_shell *shell)
+static void	expand_command_args(t_cmd *cmd, t_shell *shell)
 {
-	int i;
-	char *expanded;
+	int		i;
+	char	*expanded;
 
 	i = 0;
 	while (cmd->args[i]) // looping over parsed command args
@@ -49,9 +50,9 @@ static void expand_command_args(t_cmd *cmd, t_shell *shell)
 	}
 }
 
-static void expand_redirections(t_redir *redirs, t_shell *shell)
+static void	expand_redirections(t_redir *redirs, t_shell *shell)
 {
-	char *expanded;
+	char	*expanded;
 
 	while (redirs)
 	{
@@ -67,10 +68,11 @@ static void expand_redirections(t_redir *redirs, t_shell *shell)
 		redirs = redirs->next;
 	}
 }
+
 // main expansion function
-void expand_commands(t_cmd *cmds, t_shell *shell)
+void	expand_commands(t_cmd *cmds, t_shell *shell)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	current = cmds;
 	while (current)
