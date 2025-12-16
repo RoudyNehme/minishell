@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 18:16:07 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 11:47:12 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 12:44:51 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int builtin_export(char **args, t_shell *shell);
 int builtin_unset(char **args, t_shell *shell);
 int builtin_exit(char **args, t_shell *shell, t_cleanup_data *data);
 int is_builtin(char *cmd);
-int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int run_builtin(char **args, t_shell *shell, t_cleanup_data *data);
 int get_path_index(char **envp, char *key);
 void free_2d(char **arr);
 char **dup_env(char **real_env);

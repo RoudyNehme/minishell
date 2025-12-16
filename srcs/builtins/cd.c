@@ -6,84 +6,11 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:14 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 11:49:50 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 12:30:17 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* Builds either "KEY" or "KEY=VALUE" */
-static char	*build_env_entry(char *key, char *path)
-{
-	char	*temp;
-	char	*final;
-
-	if (path == NULL)
-		return (ft_strdup(key));
-	temp = ft_strjoin(key, "=");
-	if (!temp)
-		return (NULL);
-	final = ft_strjoin(temp, path);
-	free(temp);
-	return (final);
-}
-
-/* Replaces an existing KEY or VALUE in envp */
-static void	update_existing_env(t_shell *shell, int index, char *entry)
-{
-	free(shell->envp[index]);
-	shell->envp[index] = entry;
-}
-
-typedef struct s_norminette // afyad brilliant suggestion XD
-{
-	char	**new_envp;
-	int		size;
-	int		i;
-}	t_norminette;
-
-static void	append_env(t_shell *shell, char *entry)
-{
-	t_norminette	n;
-
-	n.size = 0;
-	n.i = -1;
-	while (shell->envp[n.size])
-		n.size++;
-	n.new_envp = malloc(sizeof(char *) * (n.size + 2));
-	if (!n.new_envp)
-		return (free(entry));
-	while (++n.i < n.size)
-	{
-		n.new_envp[n.i] = ft_strdup(shell->envp[n.i]);
-		if (!n.new_envp[n.i])
-		{
-			while (--n.i >= 0)
-				free(n.new_envp[n.i]);
-			free(n.new_envp);
-			return (free(entry));
-		}
-	}
-	n.new_envp[n.size] = entry;
-	n.new_envp[n.size + 1] = NULL;
-	free_2d(shell->envp);
-	shell->envp = n.new_envp;
-}
-
-void	set_env(char *key, char *path, t_shell *shell)
-{
-	char	*entry;
-	int		index;
-
-	entry = build_env_entry(key, path);
-	if (!entry)
-		return ;
-	index = get_path_index(shell->envp, key);
-	if (index != -1)
-		update_existing_env(shell, index, entry);
-	else
-		append_env(shell, entry);
-}
 
 // int builtin_cd(char **args, t_shell *shell)
 // {

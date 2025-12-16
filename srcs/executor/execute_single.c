@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_single.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:14:57 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 21:15:09 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:45:41 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ if (is_builtin(cmd->args[0]))
 {
     int save_stdout = dup(1);
     int save_stdin = dup(0);
+	t_cleanup_data data;
 
-    apply_redirs_single(cmd);
+	data.line = line;
+	data.tokens = tokens;
+	data.cmds = cmd;
+
+	apply_redirs_single(cmd);
     shell->last_exit_status =
-        run_builtin(cmd->args, shell, line, tokens, shell->cmds);
+        run_builtin(cmd->args, shell, &data);
     if (dup2(save_stdout, 1) == -1 ||
         dup2(save_stdin, 0) == -1)
     {

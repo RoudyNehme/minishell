@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipeline.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 14:21:20 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/15 16:01:34 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:49:11 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ void execute_pipeline(t_cmd *cmd_list, t_shell *shell, char *line, t_token *toke
     int i;
     t_cmd *current_command;
     int command_index;
-    
+
+    t_cleanup_data data;
+
+    data.line = line;
+    data.tokens = tokens;
+    data.cmds = cmd_list;
+
     cmd_count = count_cmds(cmd_list);
 	
     pipes_count = cmd_count - 1;
@@ -138,7 +144,7 @@ void execute_pipeline(t_cmd *cmd_list, t_shell *shell, char *line, t_token *toke
             // Execute command
             if (is_builtin(current_command->args[0]))
             {
-                int exit_code = run_builtin(current_command->args, shell, line, tokens, cmd_list);
+                int exit_code = run_builtin(current_command->args, shell, &data);
                 exit(exit_code);
             }
             else
