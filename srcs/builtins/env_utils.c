@@ -63,9 +63,15 @@ static void	append_env(t_shell *shell, char *entry)
 		size++;
 	new_envp = malloc(sizeof(char *) * (size + 2));
 	if (!new_envp)
-		return (free(entry));
+	{
+		free(entry);
+		return ;
+	}
 	if (!copy_env_entries(new_envp, shell->envp, size))
-		return (free(entry));
+	{
+		free(entry);
+		return ;
+	}
 	new_envp[size] = entry;
 	new_envp[size + 1] = NULL;
 	free_2d(shell->envp);
