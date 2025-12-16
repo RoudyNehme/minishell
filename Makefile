@@ -19,6 +19,7 @@ BUILTINS_SRCS = \
     srcs/builtins/env.c \
     srcs/builtins/cd_utils.c \
     srcs/builtins/cd.c \
+    srcs/builtins/env_utils.c \
     srcs/builtins/export.c \
     srcs/builtins/unset.c \
     srcs/builtins/exit.c \

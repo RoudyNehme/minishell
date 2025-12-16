@@ -12,77 +12,20 @@
 
 #include "../../includes/minishell.h"
 
-/* Builds either "KEY" or "KEY=VALUE" */
-static char *build_env_entry(char *key, char *path)
+static int	update_pwd_vars(char *old_pwd, char *new_pwd, t_shell *shell)
 {
-	char *temp;
-	char *final;
-
-	if (path == NULL)
-		return (ft_strdup(key));
-	temp = ft_strjoin(key, "=");
-	if (!temp)
-		return (NULL);
-	final = ft_strjoin(temp, path);
-	free(temp);
-	return (final);
+	set_env("OLDPWD", old_pwd, shell);
+	set_env("PWD", new_pwd, shell);
+	free(old_pwd);
+	free(new_pwd);
+	return (shell->last_exit_status = 0, 0);
 }
 
-/* Replaces an existing KEY or VALUE in envp */
-static void update_existing_env(t_shell *shell, int index, char *entry)
+static int	handle_chdir_error(char *path, char *old_pwd, t_shell *shell)
 {
-	free(shell->envp[index]);
-	shell->envp[index] = entry;
-}
-
-typedef struct s_norminette // afyad brilliant suggestion XD
-{
-	char **new_envp;
-	int size;
-	int i;
-} t_norminette;
-
-static void append_env(t_shell *shell, char *entry)
-{
-	t_norminette n;
-
-	n.size = 0;
-	n.i = -1;
-	while (shell->envp[n.size])
-		n.size++;
-	n.new_envp = malloc(sizeof(char *) * (n.size + 2));
-	if (!n.new_envp)
-		return (free(entry));
-	while (++n.i < n.size)
-	{
-		n.new_envp[n.i] = ft_strdup(shell->envp[n.i]);
-		if (!n.new_envp[n.i])
-		{
-			while (--n.i >= 0)
-				free(n.new_envp[n.i]);
-			free(n.new_envp);
-			return (free(entry));
-		}
-	}
-	n.new_envp[n.size] = entry;
-	n.new_envp[n.size + 1] = NULL;
-	free_2d(shell->envp);
-	shell->envp = n.new_envp;
-}
-
-void set_env(char *key, char *path, t_shell *shell)
-{
-	char	*entry;
-	int		index;
-
-	entry = build_env_entry(key, path);
-	if (!entry)
-		return;
-	index = get_path_index(shell->envp, key);
-	if (index != -1)
-		update_existing_env(shell, index, entry);
-	else
-		append_env(shell, entry);
+	printf("minishell: cd: %s: %s\n", path, strerror(errno));
+	free(old_pwd);
+	return (shell->last_exit_status = 1, 1);
 }
 
 // int builtin_cd(char **args, t_shell *shell)
@@ -177,37 +120,29 @@ void set_env(char *key, char *path, t_shell *shell)
 // 	return (0);
 // }
 
-static int change_directory_and_update(char *path, t_shell *shell)
+static int	change_directory_and_update(char *path, t_shell *shell)
 {
-	char *old_pwd;
-	char *new_pwd;
+	char	*old_pwd;
+	char	*new_pwd;
 
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 		return (shell->last_exit_status = 1, 1);
 	if (chdir(path) == -1)
-	{
-		printf("minishell: cd: %s: %s\n", path, strerror(errno));
-		free(old_pwd);
-		return (shell->last_exit_status = 1, 1);
-	}
+		return (handle_chdir_error(path, old_pwd, shell));
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
 		free(old_pwd);
 		return (shell->last_exit_status = 1, 1);
 	}
-	set_env("OLDPWD", old_pwd, shell);
-	set_env("PWD", new_pwd, shell);
-	free(old_pwd);
-	free(new_pwd);
-	return (shell->last_exit_status = 0, 0);
+	return (update_pwd_vars(old_pwd, new_pwd, shell));
 }
 
-static int cd_to_home(t_shell *shell)
+static int	cd_to_home(t_shell *shell)
 {
-	char *home_path;
-	int ret;
+	char	*home_path;
+	int		ret;
 
 	home_path = get_HOME_path(shell->envp);
 	if (!home_path)
@@ -221,14 +156,9 @@ static int cd_to_home(t_shell *shell)
 	return (ret);
 }
 
-static int cd_to_path(char *path, t_shell *shell)
+int	builtin_cd(char **args, t_shell *shell)
 {
-	return (change_directory_and_update(path, shell));
-}
-
-int builtin_cd(char **args, t_shell *shell)
-{
-	int arg_count;
+	int	arg_count;
 
 	arg_count = 0;
 	while (args && args[arg_count])
@@ -241,7 +171,5 @@ int builtin_cd(char **args, t_shell *shell)
 	}
 	if (arg_count == 1)
 		return (cd_to_home(shell));
-	if (arg_count == 2)
-		return (cd_to_path(args[1], shell));
-	return (0);
+	return (change_directory_and_update(args[1], shell));
 }
