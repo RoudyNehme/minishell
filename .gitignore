@@ -1,0 +1,16 @@
+# Object files
+*.o
+
+# Static libraries
+*.a
+
+# Executables
+minishell
+builtins_test
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
