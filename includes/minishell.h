@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 18:16:07 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/15 13:46:50 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:47:12 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ typedef struct s_shell
 	int		last_exit_status;
 }	t_shell;
 
+typedef struct s_cleanup_data
+{
+	char	*line;
+	t_token	*tokens;
+	t_cmd	*cmds;
+}	t_cleanup_data;
+
 #define SUCCESS 0
 #define ERROR_SYNTAX 2
 #define ERROR_CMD_NOT_FOUND 127
@@ -110,30 +117,23 @@ int builtin_cd(char **args, t_shell *shell);
 int builtin_env(t_shell *shell);
 int builtin_export(char **args, t_shell *shell);
 int builtin_unset(char **args, t_shell *shell);
-int builtin_exit(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
+int builtin_exit(char **args, t_shell *shell, t_cleanup_data *data);
 int is_builtin(char *cmd);
 int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
 int get_path_index(char **envp, char *key);
 void free_2d(char **arr);
 char **dup_env(char **real_env);
 void set_env(char *key, char *value, t_shell *shell);
-char *build_env_string(char *key, char *path);
-char *get_HOME_path(char **envp);
+char *get_home_path(char **envp);
 void print_export(char **envp);
 int check_arg_validity_export(char *arg);
 char *get_key(char *str);
 char *get_value(char *str);
-void free_resources(t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
-void exit_shell(int code, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
-int is_numeric(const char *str);
-int calculate_exit_code(const char *arg);
 long long ft_atoll(const char *str);
-void free_resources(t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
-void exit_shell(int code, t_shell *shell, char *line, t_token *tokens, t_cmd *cmds);
-int is_valid_number(const char *str, int *exit_code);
-int wrap_exit_code(const char *arg);
 int	ft_is_valid_long_long(char *str, long long *result);
 void	cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell);
+int ft_is_valid_long_long(char *str, long long *result);
+int count_exit_args(char **args);
 
 // --------------- EXECUTION ------------------
 

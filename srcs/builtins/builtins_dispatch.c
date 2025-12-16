@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_dispatch.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:29 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/11/25 12:37:41 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:13:50 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
 int is_builtin(char *name)
 {
     if (!name)
         return (0);
-
     if (ft_strcmp(name, "echo") == 0)
         return (1);
     if (ft_strcmp(name, "cd") == 0)
@@ -32,7 +30,6 @@ int is_builtin(char *name)
         return (1);
     if (ft_strcmp(name, "exit") == 0)
         return (1);
-
     return (0);
 }
 
@@ -53,7 +50,15 @@ int run_builtin(char **args, t_shell *shell, char *line, t_token *tokens, t_cmd 
 	if (!ft_strcmp(args[0], "unset"))
 		return (builtin_unset(args, shell));
 	if (!ft_strcmp(args[0], "exit"))
-		return (builtin_exit(args, shell,line,tokens,cmds));
+    {
+        t_cleanup_data data;
+
+        data.line = line;
+        data.tokens = tokens;
+        data.cmds = cmds;
+
+        return (builtin_exit(args, shell, &data));
+    }
 	return (0);
 }
 

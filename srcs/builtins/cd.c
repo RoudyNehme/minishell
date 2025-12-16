@@ -6,17 +6,17 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:14 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/13 16:08:31 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 11:49:50 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /* Builds either "KEY" or "KEY=VALUE" */
-static char *build_env_entry(char *key, char *path)
+static char	*build_env_entry(char *key, char *path)
 {
-	char *temp;
-	char *final;
+	char	*temp;
+	char	*final;
 
 	if (path == NULL)
 		return (ft_strdup(key));
@@ -29,7 +29,7 @@ static char *build_env_entry(char *key, char *path)
 }
 
 /* Replaces an existing KEY or VALUE in envp */
-static void update_existing_env(t_shell *shell, int index, char *entry)
+static void	update_existing_env(t_shell *shell, int index, char *entry)
 {
 	free(shell->envp[index]);
 	shell->envp[index] = entry;
@@ -37,14 +37,14 @@ static void update_existing_env(t_shell *shell, int index, char *entry)
 
 typedef struct s_norminette // afyad brilliant suggestion XD
 {
-	char **new_envp;
-	int size;
-	int i;
-} t_norminette;
+	char	**new_envp;
+	int		size;
+	int		i;
+}	t_norminette;
 
-static void append_env(t_shell *shell, char *entry)
+static void	append_env(t_shell *shell, char *entry)
 {
-	t_norminette n;
+	t_norminette	n;
 
 	n.size = 0;
 	n.i = -1;
@@ -70,14 +70,14 @@ static void append_env(t_shell *shell, char *entry)
 	shell->envp = n.new_envp;
 }
 
-void set_env(char *key, char *path, t_shell *shell)
+void	set_env(char *key, char *path, t_shell *shell)
 {
 	char	*entry;
 	int		index;
 
 	entry = build_env_entry(key, path);
 	if (!entry)
-		return;
+		return ;
 	index = get_path_index(shell->envp, key);
 	if (index != -1)
 		update_existing_env(shell, index, entry);
@@ -177,10 +177,10 @@ void set_env(char *key, char *path, t_shell *shell)
 // 	return (0);
 // }
 
-static int change_directory_and_update(char *path, t_shell *shell)
+static int	change_directory_and_update(char *path, t_shell *shell)
 {
-	char *old_pwd;
-	char *new_pwd;
+	char	*old_pwd;
+	char	*new_pwd;
 
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
@@ -204,12 +204,12 @@ static int change_directory_and_update(char *path, t_shell *shell)
 	return (shell->last_exit_status = 0, 0);
 }
 
-static int cd_to_home(t_shell *shell)
+static int	cd_to_home(t_shell *shell)
 {
-	char *home_path;
-	int ret;
+	char	*home_path;
+	int		ret;
 
-	home_path = get_HOME_path(shell->envp);
+	home_path = get_home_path(shell->envp);
 	if (!home_path)
 	{
 		printf("minishell: cd: HOME not set\n");
@@ -221,14 +221,14 @@ static int cd_to_home(t_shell *shell)
 	return (ret);
 }
 
-static int cd_to_path(char *path, t_shell *shell)
+static int	cd_to_path(char *path, t_shell *shell)
 {
 	return (change_directory_and_update(path, shell));
 }
 
-int builtin_cd(char **args, t_shell *shell)
+int	builtin_cd(char **args, t_shell *shell)
 {
-	int arg_count;
+	int	arg_count;
 
 	arg_count = 0;
 	while (args && args[arg_count])

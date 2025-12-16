@@ -3,60 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 12:32:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/15 17:02:01 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:47:01 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *get_HOME_path(char **envp)
+char	*get_home_path(char **envp)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (envp[i])
-    {
-        if (ft_strncmp(envp[i], "HOME=", 5) == 0)
-            return (ft_strdup(envp[i] + 5));
-        i++;
-    }
-    return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "HOME=", 5) == 0)
+			return (ft_strdup(envp[i] + 5));
+		i++;
+	}
+	return (NULL);
 }
 
-int get_path_index(char **envp, char *key)
+int	get_path_index(char **envp, char *key)
 {
-    int i;
-    int key_len;
+	int	i;
+	int	key_len;
 
-    key_len = ft_strlen(key);
-    i = 0;
-    while (envp[i])
-    {
-        /* Case 1: KEY=VALUE */
-        if (ft_strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
-            return (i);
-        /* Case 2: KEY (no value) */
-        if (ft_strcmp(envp[i], key) == 0)
-            return (i);
-        i++;
-    }
-    return (-1);
+	key_len = ft_strlen(key);
+	i = 0;
+	while (envp[i])
+	{
+		/* Case 1: KEY=VALUE */
+		if (ft_strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
+			return (i);
+		/* Case 2: KEY (no value) */
+		if (ft_strcmp(envp[i], key) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-void free_2d(char **arr)
+void	free_2d(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!arr)
-        return;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }

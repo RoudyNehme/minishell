@@ -6,98 +6,60 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:50 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/14 18:05:51 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 11:44:51 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	parse_sign(char *str, int *i)
+static int	handle_no_args(t_shell *shell, t_cleanup_data *data)
 {
-    int	sign;
-
-    sign = 1;
-    if (str[*i] == '-' || str[*i] == '+')
-    {
-        if (str[*i] == '-')
-            sign = -1;
-        (*i)++;
-    }
-    return (sign);
+	cleanup(data->line, data->tokens, data->cmds, shell);
+	exit(shell->last_exit_status);
+	return (0);
 }
 
-static int	check_digit_overflow(long long num, int sign, char c)
+static int	handle_too_many_args(t_shell *shell)
 {
-    if (sign == 1 && (num > (LLONG_MAX - (c - '0')) / 10))
-        return (0);
-    if (sign == -1 && (num > (-(LLONG_MIN + (c - '0'))) / 10))
-        return (0);
-    return (1);
+	printf("minishell: exit: too many arguments\n");
+	shell->last_exit_status = 1;
+	return (1);
 }
 
-int	ft_is_valid_long_long(char *str, long long *result)
+static void	handle_invalid_number(char *arg, t_shell *shell,
+									t_cleanup_data *data)
 {
-    int			i;
-    int			sign;
-    long long	num;
-
-    i = 0;
-    num = 0;
-    if (!str || !str[0])
-        return (0);
-    sign = parse_sign(str, &i);
-    if (!str[i])
-        return (0);
-    while (str[i])
-    {
-        if (str[i] < '0' || str[i] > '9')
-            return (0);
-        if (!check_digit_overflow(num, sign, str[i]))
-            return (0);
-        num = num * 10 + (str[i] - '0');
-        i++;
-    }
-    if (result)
-        *result = num * sign;
-    return (1);
+	printf("minishell: exit: %s: numeric argument required\n", arg);
+	shell->last_exit_status = 2;
+	cleanup(data->line, data->tokens, data->cmds, shell);
+	exit(2);
 }
 
-static void	handle_exit_code(long long exit_code, t_shell *shell, \
-    char *line, t_token *tokens, t_cmd *cmds)
+static void	handle_valid_exit(long long code, t_shell *shell,
+								t_cleanup_data *data)
 {
-    exit_code = exit_code % 256;
-    if (exit_code < 0)
-        exit_code += 256;
-    cleanup(line, tokens, cmds, shell);
-    exit((int)exit_code);
+	int	exit_code;
+
+	exit_code = (int)(code % 256);
+	if (exit_code < 0)
+		exit_code += 256;
+	cleanup(data->line, data->tokens, data->cmds, shell);
+	exit(exit_code);
 }
 
-int	builtin_exit(char **args, t_shell *shell, char *line, \
-    t_token *tokens, t_cmd *cmds)
+int	builtin_exit(char **args, t_shell *shell, t_cleanup_data *data)
 {
-    int			arg_count;
-    long long	exit_code;
+	int			arg_count;
+	long long	exit_code;
 
-    printf("exit\n");
-    arg_count = 0;
-    while (args && args[arg_count])
-        arg_count++;
-    if (arg_count == 1)
-    {
-        cleanup(line, tokens, cmds, shell);
-        exit(shell->last_exit_status);
-    }
-    if (!ft_is_valid_long_long(args[1], &exit_code))
-    {
-        printf("minishell: exit: %s: numeric argument required\n", args[1]);
-        shell->last_exit_status = 2;
-        cleanup(line, tokens, cmds, shell);
-        exit(2);
-    }
-    if (arg_count > 2)
-    {
-        printf("minishell: exit: too many arguments\n");
-        return (shell->last_exit_status = 1, 1);
-    }
-	return (handle_exit_code(exit_code, shell, line, tokens, cmds), 0);
+	printf("exit\n");
+	arg_count = count_exit_args(args);
+	if (arg_count == 1)
+		return (handle_no_args(shell, data));
+	if (!ft_is_valid_long_long(args[1], &exit_code))
+		handle_invalid_number(args[1], shell, data);
+	if (arg_count > 2)
+		return (handle_too_many_args(shell));
+	handle_valid_exit(exit_code, shell, data);
+	return (0);
 }
