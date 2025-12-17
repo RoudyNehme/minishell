@@ -58,7 +58,7 @@ int	handle_signal_interrupt(t_shell *shell, char *line)
 {
 	shell->last_exit_status = 130;
 	g_signal = 0;
-	if (line && *line)
+	if (line)
 		free(line);
 	return (1);
 }
