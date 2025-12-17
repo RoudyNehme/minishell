@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:01:14 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 12:59:23 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/17 00:24:56 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*extract_full_word(char *line, int *i)
 			quote = line[*i];
 			if (!process_quote(line, i, quote))
 			{
-				ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2); // in case of an unclosed quote
+				ft_putstr_fd("minishell: syntax error: unclosed quote", 2); // in case of an unclosed quote
 				return (NULL);
 			}
 		}

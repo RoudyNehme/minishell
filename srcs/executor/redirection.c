@@ -6,96 +6,80 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:06:26 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/11 17:51:53 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/16 21:01:39 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
+
+static void	print_redir_error(char *filename)
+{
+	write(2, "minishell: ", 11);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": ", 2);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
+	exit(1);
+}
+
+static void	handle_redir_in(t_redir *redir)
+{
+	int	fd;
+
+	fd = open(redir->file, O_RDONLY);
+	if (fd < 0)
+		print_redir_error(redir->file);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		close(fd);
+		print_redir_error(redir->file);
+	}
+	close(fd);
+}
+
+static void	handle_redir_out(t_redir *redir)
+{
+	int	fd;
+
+	fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		print_redir_error(redir->file);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		close(fd);
+		print_redir_error(redir->file);
+	}
+	close(fd);
+}
+
+static void	handle_redir_append(t_redir *redir)
+{
+	int	fd;
+
+	fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+		print_redir_error(redir->file);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		close(fd);
+		print_redir_error(redir->file);
+	}
+	close(fd);
+}
 
 void	apply_redirs_single(t_cmd *cmd)
 {
-	t_redir	*cmd_red;
-	int		fd;
+	t_redir	*redir;
 
-	cmd_red = cmd->redirs;
-	while (cmd_red)
+	redir = cmd->redirs;
+	while (redir)
 	{
-		if (cmd_red->type == REDIR_IN)
-		{
-			fd = open(cmd_red->file, O_RDONLY);
-			if (fd < 0)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				exit(1);
-			}
-			if (dup2(fd, STDIN_FILENO) == -1)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				close(fd);
-				exit(1);
-			}
-			close(fd);
-		}
-		else if (cmd_red->type == REDIR_OUT)
-		{
-			fd = open(cmd_red->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd < 0)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				exit(1);
-			}
-			if (dup2(fd, STDOUT_FILENO) == -1)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				close(fd);
-				exit(1);
-			}
-			close(fd);
-		}
-		else if (cmd_red->type == REDIR_APPEND)
-		{
-			fd = open(cmd_red->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd < 0)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				exit(1);
-			}
-			if (dup2(fd, STDOUT_FILENO) == -1)
-			{
-				write(2, "minishell: ", 11);
-				write(2, cmd_red->file, ft_strlen(cmd_red->file));
-				write(2, ": ", 2);
-				write(2, strerror(errno), ft_strlen(strerror(errno)));
-				write(2, "\n", 1);
-				close(fd);
-				exit(1);
-			}
-			close(fd);
-		}
-		else if (cmd_red->type == HEREDOC)
-		{
-			
-		}
-		cmd_red = cmd_red->next;
+		if (redir->type == REDIR_IN)
+			handle_redir_in(redir);
+		else if (redir->type == REDIR_OUT)
+			handle_redir_out(redir);
+		else if (redir->type == REDIR_APPEND)
+			handle_redir_append(redir);
+		redir = redir->next;
 	}
 }
