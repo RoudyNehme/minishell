@@ -14,14 +14,13 @@
 
 void	execute_builtin_child(t_cmd *cmd, t_pipeline *pl)
 {
-	int	exit_code;
-	t_cleanup_data *data;
-	
-	data = NULL;
-	data->line = NULL;
-	data->tokens = NULL;
-	data->cmds = pl->cmd_list;
-	exit_code = run_builtin(cmd->args, pl->shell, data);
+	int				exit_code;
+	t_cleanup_data	data;
+
+	data.line = NULL;
+	data.tokens = NULL;
+	data.cmds = pl->cmd_list;
+	exit_code = run_builtin(cmd->args, pl->shell, &data);
 	exit(exit_code);
 }
 

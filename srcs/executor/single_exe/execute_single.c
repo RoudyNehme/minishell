@@ -24,16 +24,11 @@ static void	restore_fds(int save_stdout, int save_stdin)
 	close(save_stdin);
 }
 
-static void	execute_builtin_single(t_cmd *cmd, t_shell *shell, t_token *tokens)
+static void	execute_builtin_single(t_cmd *cmd, t_shell *shell,
+	t_cleanup_data *data)
 {
 	int	save_stdout;
 	int	save_stdin;
-	t_cleanup_data *data;
-	
-	data = NULL;
-	data->line = NULL;
-	data->tokens = NULL;
-	data->cmds = shell->cmds;
 
 	save_stdout = dup(STDOUT_FILENO);
 	save_stdin = dup(STDIN_FILENO);
@@ -66,10 +61,15 @@ static void	handle_child_process(t_cmd *cmd, t_shell *shell)
 		shell->last_exit_status = 128 + WTERMSIG(status);
 }
 
-void	execute_single(t_cmd *cmd, t_shell *shell, t_token *tokens)
+void	execute_single(t_cmd *cmd, t_shell *shell, char *line, t_token *tokens)
 {
+	t_cleanup_data	data;
+
+	data.line = line;
+	data.tokens = tokens;
+	data.cmds = cmd;
 	if (is_builtin(cmd->args[0]))
-		execute_builtin_single(cmd, shell, tokens);
+		execute_builtin_single(cmd, shell, &data);
 	else
 		handle_child_process(cmd, shell);
 }

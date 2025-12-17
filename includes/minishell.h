@@ -170,12 +170,12 @@ char		*check_path_access(char *full, char **paths);
 char		*search_in_paths(char *cmd, char **paths);
 void		apply_redirs_single(t_cmd *cmd);
 void		execute_single(t_cmd *cmd, t_shell *shell, char *line,
-                t_token *tokens);
+				t_token *tokens);
 void		execute_external_command(t_cmd *cmd, t_shell *shell);
 int			has_heredoc(t_cmd *cmd_list);
 int			process_heredocs(t_cmd *cmd_list, t_shell *shell);
 void		execute_pipeline(t_cmd *cmd_list, t_shell *shell, char *line,
-                t_token *tokens);
+				t_token *tokens);
 
 // Pipeline functions
 int			create_pipes_pl(t_pipeline *pl);
@@ -197,10 +197,14 @@ int			setup_heredoc_file(t_redir *cmd_red);
 int			should_expand_heredoc(t_redir *cmd_red);
 char		*expand_heredoc_line(char *line, t_shell *shell);
 void		heredoc_child_process(t_redir *redir, char *delim, int expand,
-                t_shell *shell);
+				t_shell *shell);
 
 //----------------SIGNALS -----------------
 void		sigint_prompt_handler(int sig);
 void		sigint_heredoc_handler(int sig);
+
+// Shell utils
+void		init_shell(t_shell *shell, char **envp);
+int			handle_signal_interrupt(t_shell *shell, char *line);
 
 #endif
