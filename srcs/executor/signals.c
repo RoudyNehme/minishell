@@ -39,7 +39,6 @@ void sigint_exec_handler(int sig)
 void sigquit_exec_handler(int sig)
 {
     (void)sig;
-    write(1, "Quit (core dumped)\n", 19);
 }
 
 void setup_signals(void)
