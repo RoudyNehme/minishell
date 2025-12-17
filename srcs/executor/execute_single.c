@@ -48,6 +48,9 @@ else
 	if (pid == 0)
 	{
 		// CHILD
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+
 		if (!cmd->args || !cmd->args[0])
 			exit(0); // only redirs, no command
 
@@ -78,14 +81,23 @@ else
 		exit(126);
 	}
 	// PARENT
+	signal(SIGINT, sigint_exec_handler);
+	signal(SIGQUIT, sigquit_exec_handler);
+
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		shell->last_exit_status = 1;
+		setup_signals();
 		return ;
 	}
 	if (WIFEXITED(status))
 		shell->last_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			write(1, "Quit (core dumped)\n", 19);
 		shell->last_exit_status = 128 + WTERMSIG(status);
+	}
+	setup_signals();
 	}
 }

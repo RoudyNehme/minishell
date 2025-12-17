@@ -29,3 +29,21 @@ void sigint_heredoc_handler(int sig)
     write(1, "\n", 1);
     exit(130);
 }
+
+void sigint_exec_handler(int sig)
+{
+    (void)sig;
+    write(1, "\n", 1);
+}
+
+void sigquit_exec_handler(int sig)
+{
+    (void)sig;
+    write(1, "Quit (core dumped)\n", 19);
+}
+
+void setup_signals(void)
+{
+    signal(SIGINT, sigint_prompt_handler);
+    signal(SIGQUIT, SIG_IGN);
+}

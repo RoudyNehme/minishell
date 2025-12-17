@@ -1,0 +1,14 @@
+# Object files
+*.o
+*.a
+
+# Executables
+minishell
+builtins_test
+
+# Temporary files
+/tmp/hd_*
+
+# IDE
+.vscode/
+.idea/

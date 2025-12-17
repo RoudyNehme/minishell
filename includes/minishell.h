@@ -131,5 +131,8 @@ int process_heredocs(t_cmd *cmd_list, t_shell *shell);
 
 //----------------SIGNALS -----------------
 void sigint_prompt_handler(int sig);
-void	sigint_heredoc_handler(int sig);
+void sigint_heredoc_handler(int sig);
+void sigint_exec_handler(int sig);
+void sigquit_exec_handler(int sig);
+void setup_signals(void);
 #endif
