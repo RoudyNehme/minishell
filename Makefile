@@ -63,6 +63,7 @@ SRCS = \
     srcs/expander/expand_utils.c \
     srcs/expander/expand_quotes.c \
     srcs/utils/ft_atoll.c \
+    srcs/utils/shell_utils.c \
     $(BUILTINS_SRCS)
 
 OBJS = $(SRCS:.c=.o)

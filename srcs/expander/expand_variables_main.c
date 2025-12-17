@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:25:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 10:03:17 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:01:43 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char *append_char(char *result, char c)
+static char	*append_char(char *result, char c)
 {
 	char	temp[2];
 	char	*joined;
@@ -24,7 +24,7 @@ static char *append_char(char *result, char c)
 	return (joined);
 }
 
-static char *process_dollar(char *result, char *str, int *i, t_shell *shell)
+static char	*process_dollar(char *result, char *str, int *i, t_shell *shell)
 {
 	if (str[*i + 1] == '?')
 		result = expand_exit_status(&result, i, shell);
@@ -35,7 +35,7 @@ static char *process_dollar(char *result, char *str, int *i, t_shell *shell)
 	return (result);
 }
 
-char *expand_variable(char *str, t_shell *shell)
+char	*expand_variable(char *str, t_shell *shell)
 {
 	char	*result;
 	int		i;

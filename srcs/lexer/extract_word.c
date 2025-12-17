@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:01:14 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 10:27:18 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 12:59:23 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int process_quote(char *line, int *i, char quote)
+static int	process_quote(char *line, int *i, char quote)
 {
 	(*i)++; // Skip opening quote
 	while (line[*i] && line[*i] != quote)
@@ -25,7 +25,7 @@ static int process_quote(char *line, int *i, char quote)
 	return (0); // Unclosed quote
 }
 
-char *extract_full_word(char *line, int *i)
+char	*extract_full_word(char *line, int *i)
 {
 	int		start;
 	int		len;

@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:40 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 11:33:20 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:45:10 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_arg_validity(char *arg)
 		return (0);
 	while (arg[index])
 	{
-		if (ft_isalpha(arg[index]) || ft_isdigit(arg[index]) \
+		if (ft_isalpha(arg[index]) || ft_isdigit(arg[index])
 			|| arg[index] == '_')
 			index++;
 		else
