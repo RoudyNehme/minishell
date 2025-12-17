@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< Updated upstream
-/*   Created: 2025/12/13 16:56:20 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/13 16:56:22 by rnehme           ###   ########.fr       */
-=======
 /*   Created: 2025/12/11 17:37:12 by rberdkan          #+#    #+#             */
 /*   Updated: 2025/12/13 02:23:44 by rberdkan         ###   ########.fr       */
->>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +131,8 @@ int process_heredocs(t_cmd *cmd_list, t_shell *shell);
 
 //----------------SIGNALS -----------------
 void sigint_prompt_handler(int sig);
-void	sigint_heredoc_handler(int sig);
+void sigint_heredoc_handler(int sig);
+void sigint_exec_handler(int sig);
+void sigquit_exec_handler(int sig);
+void setup_signals(void);
 #endif

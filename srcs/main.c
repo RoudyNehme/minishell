@@ -25,8 +25,7 @@ int main(int argc, char **argv, char **envp)
     shell.cmds = NULL;
     shell.last_exit_status = 0;
 
-    signal(SIGINT, sigint_prompt_handler);
-    signal(SIGQUIT, SIG_IGN);
+    setup_signals();
 
    while (1)
 {
