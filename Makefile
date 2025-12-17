@@ -27,13 +27,23 @@ BUILTINS_SRCS = \
     srcs/builtins/exit_validation.c \
     srcs/builtins/exit_utils.c \
     srcs/builtins/builtins_dispatch.c \
-	srcs/executor/execute_single.c \
 	srcs/executor/redirection.c \
 	srcs/executor/utils_execution.c \
+	srcs/executor/path_helpers.c \
 	srcs/executor/ft_split_path.c \
-	srcs/executor/execution_pipeline.c \
-	srcs/executor/heredoc.c \
 	srcs/executor/signals.c \
+	srcs/executor/pipeline_exe/execution_pipeline.c \
+    srcs/executor/pipeline_exe/pipeline_pipes.c \
+    srcs/executor/pipeline_exe/pipeline_setup.c \
+    srcs/executor/pipeline_exe/pipeline_execute.c \
+    srcs/executor/pipeline_exe/pipeline_child.c \
+	srcs/executor/heredoc/heredoc_utils.c \
+    srcs/executor/heredoc/heredoc_expand.c \
+    srcs/executor/heredoc/heredoc_child.c \
+    srcs/executor/heredoc/heredoc_process.c \
+	srcs/executor/single_exe/execute_external.c \
+	srcs/executor/single_exe/execute_single.c \
+
 
 # Main Minishell Sources
 SRCS = \
