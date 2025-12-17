@@ -5,63 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/24 16:53:07 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 21:26:08 by rberdkan         ###   ########.fr       */
+/*   Created: 2025/12/08 15:32:00 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/17 19:18:18 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_exit_args(char **args)
+static int	count_exit_arguments(char **args)
 {
-    int	count;
+    int	i;
 
-    count = 0;
-    while (args[count])
-        count++;
-    return (count);
+    i = 0;
+    while (args[i])
+        i++;
+    return (i);
 }
 
-static void	handle_no_args(t_shell *shell, char *line, t_token *tokens,
-        t_cmd *cmds)
+static void	cleanup_and_exit(t_shell *shell, t_cleanup_data *data, int code)
 {
-    write(1, "exit\n", 5);
-    cleanup(line, tokens, cmds, shell);
-    exit(shell->last_exit_status);
+    if (data)
+    {
+        if (data->line)
+            free(data->line);
+        if (data->tokens)
+            free_tokens(data->tokens);
+        if (data->cmds)
+            free_cmds(data->cmds);
+    }
+    if (shell && shell->envp)
+        free_2d(shell->envp);
+    exit(code);
 }
 
-static void	handle_invalid_arg(t_shell *shell, char **args, char *line,
-        t_token *tokens, t_cmd *cmds)
+static void	handle_invalid_arg(char *arg, t_shell *shell, t_cleanup_data *data)
 {
-    write(2, "exit\n", 5);
-    write(2, "minishell: exit: ", 17);
-    write(2, args[1], ft_strlen(args[1]));
-    write(2, ": numeric argument required\n", 28);
-    cleanup(line, tokens, cmds, shell);
-    exit(2);
+    ft_putstr_fd("minishell: exit: ", 2);
+    ft_putstr_fd(arg, 2);
+    ft_putendl_fd(": numeric argument required", 2);
+    cleanup_and_exit(shell, data, 2);
 }
 
-static int	handle_too_many_args(void)
+int	builtin_exit(char **args, t_shell *shell, t_cleanup_data *data)
 {
-    write(2, "exit\n", 5);
-    write(2, "minishell: exit: too many arguments\n", 36);
-    return (1);
-}
+    int	exit_code;
+    int	arg_count;
 
-int	builtin_exit(char **args, t_shell *shell, char *line,
-        t_token *tokens, t_cmd *cmds)
-{
-    int		arg_count;
-    int		exit_code;
-
-    arg_count = count_exit_args(args);
+    ft_putendl_fd("exit", 1);
+    arg_count = count_exit_arguments(args);
     if (arg_count == 1)
-        handle_no_args(shell, line, tokens, cmds);
+    {
+        exit_code = shell->last_exit_status;
+        cleanup_and_exit(shell, data, exit_code);
+    }
     if (!is_valid_number(args[1], &exit_code))
-        handle_invalid_arg(shell, args, line, tokens, cmds);
+        handle_invalid_arg(args[1], shell, data);
     if (arg_count > 2)
-        return (handle_too_many_args());
-    write(1, "exit\n", 5);
-    cleanup(line, tokens, cmds, shell);
-    exit((unsigned char)exit_code);
+    {
+        ft_putendl_fd("minishell: exit: too many arguments", 2);
+        return (1);
+    }
+    cleanup_and_exit(shell, data, exit_code);
+    return (0);
 }

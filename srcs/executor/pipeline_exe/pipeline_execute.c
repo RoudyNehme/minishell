@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 23:54:47 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 00:08:12 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:07:31 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	execute_builtin_child(t_cmd *cmd, t_pipeline *pl)
 {
-	int	exit_code;
+    int				exit_code;
+    t_cleanup_data	data;
 
-	exit_code = run_builtin(cmd->args, pl->shell, NULL, NULL, pl->cmd_list);
-	exit(exit_code);
+    data.line = NULL;
+    data.tokens = NULL;
+    data.cmds = pl->cmd_list;
+    exit_code = run_builtin(cmd->args, pl->shell, &data);
+    exit(exit_code);
 }
 
 void	execute_external_child(t_cmd *cmd, t_pipeline *pl)

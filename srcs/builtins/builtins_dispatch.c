@@ -6,7 +6,7 @@
 /*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:29 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 21:56:21 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:07:51 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	is_numeric(const char *str)
     return (1);
 }
 
-
 int	is_valid_number(const char *str, int *exit_code)
 {
     long long	num;
@@ -41,7 +40,6 @@ int	is_valid_number(const char *str, int *exit_code)
     *exit_code = (unsigned char)num;
     return (1);
 }
-
 
 int	is_builtin(char *name)
 {
@@ -64,8 +62,7 @@ int	is_builtin(char *name)
     return (0);
 }
 
-int	run_builtin(char **args, t_shell *shell, char *line,
-        t_token *tokens, t_cmd *cmds)
+int	run_builtin(char **args, t_shell *shell, t_cleanup_data *data)
 {
     if (!args || !args[0])
         return (0);
@@ -82,6 +79,6 @@ int	run_builtin(char **args, t_shell *shell, char *line,
     if (!ft_strcmp(args[0], "unset"))
         return (builtin_unset(args, shell));
     if (!ft_strcmp(args[0], "exit"))
-        return (builtin_exit(args, shell, line, tokens, cmds));
+        return (builtin_exit(args, shell, data));
     return (0);
 }
