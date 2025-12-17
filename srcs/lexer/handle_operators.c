@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:32:51 by rnehme            #+#    #+#             */
-/*   Updated: 2025/11/15 21:43:23 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/15 13:57:47 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
 
 static t_token *handle_redirect_out(char *line, int *i)
 {
@@ -38,17 +33,30 @@ static t_token *handle_redirect_in(char *line, int *i)
 	(*i)++;
 	return (create_token(REDIR_IN, "<"));
 }
-
+// old version 
+// t_token *handle_operator(char *line, int *i)
+// {
+// 	if (line[*i] == '|')
+// 	{
+// 		(*i)++;
+// 		return (create_token(PIPE, "|"));
+// 	}
+// 	else if (line[*i] == '>')
+// 		return (handle_redirect_out(line, i));
+// 	else if (line[*i] == '<')
+// 		return (handle_redirect_in(line, i));
+// 	return (NULL);
+// }
 t_token *handle_operator(char *line, int *i)
 {
-	if (line[*i] == '|')
-	{
-		(*i)++;
-		return (create_token(PIPE, "|"));
-	}
-	else if (line[*i] == '>') // checks if the *i is a redir
-		return (handle_redirect_out(line, i));
-	else if (line[*i] == '<')
-		return (handle_redirect_in(line, i));
-	return (NULL);
+    if (line[*i] == '<')
+        return (handle_redirect_in(line, i));
+    else if (line[*i] == '>')
+        return (handle_redirect_out(line, i));
+    else if (line[*i] == '|')
+    {
+        (*i)++;
+        return (create_token(PIPE, "|"));
+    }
+    return (NULL);
 }

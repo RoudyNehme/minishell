@@ -44,6 +44,7 @@ files = \
 	ft_putstr_fd \
 	ft_putendl_fd \
 	ft_putnbr_fd \
+	ft_strcmp \
 
 # Default target to build the library
 $(NAME):

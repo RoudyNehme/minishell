@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/19 13:27:29 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 16:15:58 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/14 08:58:08 by rnehme            #+#    #+#             */
+/*   Updated: 2025/12/16 11:45:21 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_valid_var_char(char c)
+/**
+ * Duplicates the environment variables into a new array.
+ * Returns a copy of the environment or NULL on error.
+ */
+char	**dup_env(char **real_env)
 {
-	return (ft_isalnum(c) || c == '_');
-}
+	int		size;
+	char	**copy_env;
+	int		i;
 
-// Get environment variable value
-char *get_env_value(char *name, char **envp)
-{
-	int	i;
-	int	len;
-
-	if (!name || !envp)
+	size = 0;
+	while (real_env[size])
+		size++;
+	copy_env = malloc(sizeof(char *) * (size + 1));
+	if (!copy_env)
 		return (NULL);
-	len = ft_strlen(name);
 	i = 0;
-	while (envp[i])
+	while (i < size)
 	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
+		copy_env[i] = ft_strdup(real_env[i]);
 		i++;
 	}
-	return (NULL);
+	copy_env[size] = NULL;
+	return (copy_env);
 }

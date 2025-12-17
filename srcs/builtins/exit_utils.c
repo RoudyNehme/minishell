@@ -1,37 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/19 13:27:29 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/10 16:15:58 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/16 10:59:13 by rnehme            #+#    #+#             */
+/*   Updated: 2025/12/16 11:44:26 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_valid_var_char(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-// Get environment variable value
-char *get_env_value(char *name, char **envp)
+void	cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell)
 {
 	int	i;
-	int	len;
 
-	if (!name || !envp)
-		return (NULL);
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
+	if (line)
+		free(line);
+	if (tokens)
+		free_tokens(tokens);
+	if (cmds)
+		free_cmds(cmds);
+	if (shell && shell->envp)
 	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
+		i = 0;
+		while (shell->envp[i])
+			free(shell->envp[i++]);
+		free(shell->envp);
 	}
-	return (NULL);
+	rl_clear_history();
+}
+
+int	count_exit_args(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args && args[count])
+		count++;
+	return (count);
 }
