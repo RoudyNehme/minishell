@@ -53,6 +53,7 @@ static void	main_loop(t_shell *shell)
 
 	while (1)
 	{
+		g_signal = 0;
 		line = readline("minishell> ");
 		if (!line)
 		{
