@@ -23,6 +23,16 @@ static int	bad_operator(char c)
 	return (c == '|' || c == '.' || c == '\\' || c == '/');
 }
 
+static int	is_trailing_operator(char *line, int i)
+{
+	if (!bad_operator(line[i]))
+		return (0);
+	i++;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	return (!line[i]);
+}
+
 static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word
 {
 	char	*word;
@@ -52,7 +62,7 @@ t_token	*tokenizer(char *line) // takes the user input and loops until the end (
 		skip_whitespace(line, &i);
 		if (!line[i])
 			break ;
-		if (bad_operator(line[i]) && !line[i + 1]) // temp until pipes are done so we can test
+		if (is_trailing_operator(line, i))
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			ft_putchar_fd(line[i], 2);
