@@ -49,8 +49,7 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->envp = dup_env(envp);
 	shell->cmds = NULL;
 	shell->last_exit_status = 0;
-	signal(SIGINT, sigint_prompt_handler);
-	signal(SIGQUIT, SIG_IGN);
+	setup_interactive_signals();
 	increment_shlvl(shell);
 }
 

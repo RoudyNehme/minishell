@@ -28,66 +28,66 @@
 
 typedef enum token_type
 {
-    WORD,
-    PIPE,
-    REDIR_IN,
-    REDIR_OUT,
-    REDIR_APPEND,
-    HEREDOC,
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
 }	t_token_type;
 
 typedef struct s_token
 {
-    t_token_type	type;
-    char			*value;
-    struct s_token	*next;
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_redir
 {
-    t_token_type	type;
-    char			*file;
-    struct s_redir	*next;
+	t_token_type	type;
+	char			*file;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_cmd
 {
-    char			**args;
-    t_redir			*redirs;
-    struct s_cmd	*next;
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_shell
 {
-    char	**envp;
-    t_cmd	*cmds;
-    int		last_exit_status;
+	char	**envp;
+	t_cmd	*cmds;
+	int		last_exit_status;
 }	t_shell;
 
 typedef struct s_pipeline
 {
-    int		cmd_count;
-    int		pipes_count;
-    int		current_index;
-    t_shell	*shell;
-    t_cmd	*cmd_list;
-    pid_t	child_pids[1024];
-    int		pipes[1024][2];
+	int		cmd_count;
+	int		pipes_count;
+	int		current_index;
+	t_shell	*shell;
+	t_cmd	*cmd_list;
+	pid_t	child_pids[1024];
+	int		pipes[1024][2];
 }	t_pipeline;
 
 typedef struct s_cleanup_data
 {
-    char *line;
-    t_token *tokens;
-    t_cmd *cmds;
-} t_cleanup_data;
+	char	*line;
+	t_token	*tokens;
+	t_cmd	*cmds;
+}	t_cleanup_data;
 
 typedef struct s_norminette
 {
-    char **new_envp;
-    int size;
-    int i;
-} t_norminette;
+	char	**new_envp;
+	int		size;
+	int		i;
+}	t_norminette;
 
 # define SUCCESS 0
 # define ERROR_SYNTAX 2
@@ -133,30 +133,30 @@ int			builtin_cd(char **args, t_shell *shell);
 int			builtin_env(t_shell *shell);
 int			builtin_export(char **args, t_shell *shell);
 int			builtin_unset(char **args, t_shell *shell);
-int builtin_exit(char **args, t_shell *shell, t_cleanup_data *data);
-int is_builtin(char *cmd);
-int run_builtin(char **args, t_shell *shell, t_cleanup_data *data);
-int get_path_index(char **envp, char *key);
+int			builtin_exit(char **args, t_shell *shell, t_cleanup_data *data);
+int			is_builtin(char *cmd);
+int			run_builtin(char **args, t_shell *shell, t_cleanup_data *data);
+int			get_path_index(char **envp, char *key);
 void		free_2d(char **arr);
 char		**dup_env(char **real_env);
 void		set_env(char *key, char *value, t_shell *shell);
 char		*build_env_string(char *key, char *path);
-char		*get_home_path(char **envp);///cahnges home to HOME
+char		*get_home_path(char **envp);
 void		print_export(char **envp);
 int			check_arg_validity_export(char *arg);
 char		*get_key(char *str);
 char		*get_value(char *str);
 void		free_resources(t_shell *shell, char *line, t_token *tokens,
-                t_cmd *cmds);
+				t_cmd *cmds);
 void		exit_shell(int code, t_shell *shell, char *line, t_token *tokens,
-                t_cmd *cmds);
-int count_exit_args(char **args);
-int calculate_exit_code(const char *arg);
+				t_cmd *cmds);
+int			count_exit_args(char **args);
+int			calculate_exit_code(const char *arg);
 long long	ft_atoll(const char *str);
 int			is_valid_number(const char *str, int *exit_code);
 int			wrap_exit_code(const char *arg);
-int ft_is_valid_long_long(char *str, long long *result);
-void cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell);
+int			ft_is_valid_long_long(char *str, long long *result);
+void		cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell);
 
 // --------------- EXECUTION ------------------
 char		**ft_split_path(const char *path);
@@ -202,6 +202,10 @@ void		heredoc_child_process(t_redir *redir, char *delim, int expand,
 //----------------SIGNALS -----------------
 void		sigint_prompt_handler(int sig);
 void		sigint_heredoc_handler(int sig);
+void		setup_interactive_signals(void);
+void		setup_child_signals(void);
+void		setup_heredoc_signals(void);
+void		setup_ignore_signals(void);
 
 // Shell utils
 void		init_shell(t_shell *shell, char **envp);

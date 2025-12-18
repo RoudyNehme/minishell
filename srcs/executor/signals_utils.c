@@ -1,43 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 22:28:18 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/17 19:45:55 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/18 11:00:00 by rnehme            #+#    #+#             */
+/*   Updated: 2025/12/18 11:00:00 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-volatile sig_atomic_t	g_signal = 0;
-
-void	sigint_prompt_handler(int sig)
+void	setup_heredoc_signals(void)
 {
-	g_signal = sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	sigint_heredoc_handler(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
-}
-
-void	setup_interactive_signals(void)
-{
-	signal(SIGINT, sigint_prompt_handler);
+	signal(SIGINT, sigint_heredoc_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setup_child_signals(void)
+void	setup_ignore_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

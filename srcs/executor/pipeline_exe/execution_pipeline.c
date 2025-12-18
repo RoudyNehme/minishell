@@ -31,11 +31,14 @@ void	execute_pipeline(t_cmd *cmd_list, t_shell *shell, char *line,
 	init_pipeline(&pl, cmd_list, shell);
 	if (create_pipes_pl(&pl) == -1)
 		return ;
+	setup_ignore_signals();
 	if (fork_all_commands(&pl) != 0)
 	{
+		setup_interactive_signals();
 		shell->last_exit_status = 1;
 		return ;
 	}
 	close_all_pipes(&pl);
 	wait_all_children(&pl);
+	setup_interactive_signals();
 }

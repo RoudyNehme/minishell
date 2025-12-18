@@ -32,6 +32,7 @@ BUILTINS_SRCS = \
 	srcs/executor/path_helpers.c \
 	srcs/executor/ft_split_path.c \
 	srcs/executor/signals.c \
+	srcs/executor/signals_utils.c \
 	srcs/executor/pipeline_exe/execution_pipeline.c \
     srcs/executor/pipeline_exe/pipeline_pipes.c \
     srcs/executor/pipeline_exe/pipeline_setup.c \

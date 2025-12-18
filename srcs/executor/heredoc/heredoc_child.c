@@ -69,8 +69,7 @@ void	heredoc_child_process(t_redir *redir, char *delim, int expand,
 	int		fd;
 	char	*line;
 
-	signal(SIGINT, sigint_heredoc_handler);
-	signal(SIGQUIT, SIG_IGN);
+	setup_heredoc_signals();
 	fd = open_heredoc_fd(redir->file);
 	while (1)
 	{

@@ -14,8 +14,7 @@
 
 static void	child_process(t_cmd *cmd, t_pipeline *pl)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	setup_child_signals();
 	setup_child_pipes(pl);
 	close_all_pipes(pl);
 	apply_redirs_single(cmd);

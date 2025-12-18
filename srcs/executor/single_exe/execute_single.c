@@ -37,6 +37,18 @@ static void	execute_builtin_single(t_cmd *cmd, t_shell *shell,
 	restore_fds(save_stdout, save_stdin);
 }
 
+static void	handle_child_exit_status(t_shell *shell, int status)
+{
+	if (WIFEXITED(status))
+		shell->last_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		shell->last_exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 19);
+	}
+}
+
 static void	handle_child_process(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
@@ -49,16 +61,19 @@ static void	handle_child_process(t_cmd *cmd, t_shell *shell)
 		return ;
 	}
 	if (pid == 0)
+	{
+		setup_child_signals();
 		execute_external_command(cmd, shell);
+	}
+	setup_ignore_signals();
 	if (waitpid(pid, &status, 0) == -1)
 	{
+		setup_interactive_signals();
 		shell->last_exit_status = 1;
 		return ;
 	}
-	if (WIFEXITED(status))
-		shell->last_exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		shell->last_exit_status = 128 + WTERMSIG(status);
+	setup_interactive_signals();
+	handle_child_exit_status(shell, status);
 }
 
 void	execute_single(t_cmd *cmd, t_shell *shell, char *line, t_token *tokens)
