@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 16:36:06 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 12:53:35 by rnehme           ###   ########.fr       */
+/*   Created: 2025/12/18 17:20:15 by rberdkan          #+#    #+#             */
+/*   Updated: 2025/12/18 17:20:17 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	builtin_pwd(void)
+int	builtin_pwd(t_shell *shell)
 {
-	char	*pwd;
+    char	*pwd;
+    char	*pwd_env;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-	{
-		perror("minishell: pwd: ");
-		return (1);
-	}
-	printf("%s\n", pwd);
-	free(pwd);
-	return (0);
+    pwd = getcwd(NULL, 0);
+    if (pwd)
+    {
+        printf("%s\n", pwd);
+        free(pwd);
+        return (0);
+    }
+    pwd_env = get_env_value("PWD", shell->envp);
+    if (pwd_env)
+    {
+        printf("%s\n", pwd_env);
+        return (0);
+    }
+    return (1);
 }

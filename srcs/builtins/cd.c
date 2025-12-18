@@ -3,172 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:14 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 12:30:17 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:59:11 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int builtin_cd(char **args, t_shell *shell)
-// {
-// 	int	arg_count;
+static char	*get_parent_from_pwd(t_shell *shell)
+{
+    char	*pwd;
+    char	*last_slash;
+    char	*parent;
 
-// 	arg_count = 0;
-// 	while (args && args[arg_count])
-// 		arg_count++;
-// 	if (arg_count > 2)
-// 	{
-// 		printf("minishell: cd: too many arguments\n");
-// 		shell->last_exit_status = 1;
-// 		return (1);
-// 	}
-// 	if (arg_count == 1)
-// 	{
-// 		char	*HOME_path;
-// 		char	*old_PWD;
-// 		char	*new_PWD;
+    pwd = get_env_value("PWD", shell->envp);
+    if (!pwd)
+        return (NULL);
+    last_slash = ft_strrchr(pwd, '/');
+    if (!last_slash || last_slash == pwd)
+        return (ft_strdup("/"));
+    parent = ft_substr(pwd, 0, last_slash - pwd);
+    return (parent);
+}
 
-// 		HOME_path = get_HOME_path(shell->envp);
-// 		if (!HOME_path)
-// 		{
-// 			printf("minishell: cd: HOME not set\n");
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		old_PWD = getcwd(NULL, 0);
-// 		if (!old_PWD)
-// 		{
-// 			free(HOME_path);
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		if (chdir(HOME_path) == -1)
-// 		{
-// 			printf("minishell: cd: %s: %s\n", HOME_path, strerror(errno));
-// 			free(old_PWD);
-// 			free(HOME_path);
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		new_PWD = getcwd(NULL, 0);
-// 		if (!new_PWD)
-// 		{
-// 			free(old_PWD);
-// 			free(HOME_path);
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		set_env("OLDPWD", old_PWD, shell);
-// 		set_env("PWD", new_PWD, shell);
-// 		free(old_PWD);
-// 		free(new_PWD);
-// 		free(HOME_path);
-// 		shell->last_exit_status = 0;
-// 		return (0);
-// 	}
-// 	if (arg_count == 2)
-// 	{
-// 		char	*old_PWD;
-// 		char	*new_PWD;
+static int	cd_parent_in_deleted_dir(t_shell *shell)
+{
+    char	*parent;
+    int		can_access;
 
-// 		old_PWD = getcwd(NULL, 0);
-// 		if (!old_PWD)
-// 		{
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		if (chdir(args[1]) == -1)
-// 		{
-// 			printf("minishell: cd: %s: %s\n", args[1], strerror(errno));
-// 			free(old_PWD);
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		new_PWD = getcwd(NULL, 0);
-// 		if (!new_PWD)
-// 		{
-// 			free(old_PWD);
-// 			shell->last_exit_status = 1;
-// 			return (1);
-// 		}
-// 		set_env("OLDPWD", old_PWD, shell);
-// 		set_env("PWD", new_PWD, shell);
-// 		free(old_PWD);
-// 		free(new_PWD);
-// 		shell->last_exit_status = 0;
-// 		return (0);
-// 	}
-// 	return (0);
-// }
+    parent = get_parent_from_pwd(shell);
+    if (!parent)
+        return (shell->last_exit_status = 1, 1);
+    can_access = (access(parent, F_OK) == 0);
+    if (can_access)
+    {
+        if (chdir(parent) == 0)
+        {
+            set_env("PWD", parent, shell);
+            free(parent);
+            return (shell->last_exit_status = 0, 0);
+        }
+    }
+    ft_putendl_fd("cd: error retrieving current directory: getcwd: "
+        "cannot access parent directories: No such file or directory", 2);
+    set_env("PWD", parent, shell);
+    free(parent);
+    return (shell->last_exit_status = 1, 1);
+}
 
 static int	change_directory_and_update(char *path, t_shell *shell)
 {
-	char	*old_pwd;
-	char	*new_pwd;
+    char	*old_pwd;
+    char	*new_pwd;
 
-	old_pwd = getcwd(NULL, 0);
-	if (!old_pwd)
-		return (shell->last_exit_status = 1, 1);
-	if (chdir(path) == -1)
-	{
-		printf("minishell: cd: %s: %s\n", path, strerror(errno));
-		free(old_pwd);
-		return (shell->last_exit_status = 1, 1);
-	}
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		free(old_pwd);
-		return (shell->last_exit_status = 1, 1);
-	}
-	set_env("OLDPWD", old_pwd, shell);
-	set_env("PWD", new_pwd, shell);
-	free(old_pwd);
-	free(new_pwd);
-	return (shell->last_exit_status = 0, 0);
+    old_pwd = getcwd(NULL, 0);
+    if (chdir(path) == -1)
+    {
+        printf("minishell: cd: %s: %s\n", path, strerror(errno));
+        free(old_pwd);
+        return (shell->last_exit_status = 1, 1);
+    }
+    new_pwd = getcwd(NULL, 0);
+    if (!new_pwd)
+        new_pwd = ft_strdup(path);
+    if (old_pwd)
+        set_env("OLDPWD", old_pwd, shell);
+    if (new_pwd)
+        set_env("PWD", new_pwd, shell);
+    free(old_pwd);
+    free(new_pwd);
+    return (shell->last_exit_status = 0, 0);
 }
 
 static int	cd_to_home(t_shell *shell)
 {
-	char	*home_path;
-	int		ret;
+    char	*home_path;
+    int		ret;
 
-	home_path = get_home_path(shell->envp);
-	if (!home_path)
-	{
-		printf("minishell: cd: HOME not set\n");
-		shell->last_exit_status = 1;
-		return (1);
-	}
-	ret = change_directory_and_update(home_path, shell);
-	free(home_path);
-	return (ret);
+    home_path = get_home_path(shell->envp);
+    if (!home_path)
+    {
+        printf("minishell: cd: HOME not set\n");
+        shell->last_exit_status = 1;
+        return (1);
+    }
+    ret = change_directory_and_update(home_path, shell);
+    return (ret);
 }
 
 static int	cd_to_path(char *path, t_shell *shell)
 {
-	return (change_directory_and_update(path, shell));
+    char	*current;
+
+    if (ft_strcmp(path, "..") == 0)
+    {
+        current = getcwd(NULL, 0);
+        if (!current)
+            return (cd_parent_in_deleted_dir(shell));
+        free(current);
+    }
+    return (change_directory_and_update(path, shell));
 }
 
 int	builtin_cd(char **args, t_shell *shell)
 {
-	int	arg_count;
+    int	arg_count;
 
-	arg_count = 0;
-	while (args && args[arg_count])
-		arg_count++;
-	if (arg_count > 2)
-	{
-		printf("minishell: cd: too many arguments\n");
-		shell->last_exit_status = 1;
-		return (1);
-	}
-	if (arg_count == 1)
-		return (cd_to_home(shell));
-	if (arg_count == 2)
-		return (cd_to_path(args[1], shell));
-	return (0);
+    arg_count = 0;
+    while (args && args[arg_count])
+        arg_count++;
+    if (arg_count > 2)
+    {
+        printf("minishell: cd: too many arguments\n");
+        shell->last_exit_status = 1;
+        return (1);
+    }
+    if (arg_count == 1)
+        return (cd_to_home(shell));
+    if (arg_count == 2)
+        return (cd_to_path(args[1], shell));
+    return (0);
 }

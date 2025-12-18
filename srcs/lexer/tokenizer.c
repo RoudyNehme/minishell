@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 13:00:36 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/18 22:42:15 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_token	*tokenizer(char *line) // takes the user input and loops until the end (
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			ft_putchar_fd(line[i], 2);
 			ft_putstr_fd("'\n", 2);
-			break ;
+			return (NULL) ;
 		}
 		tokenizer_helper(&head, line, &i);
 	}

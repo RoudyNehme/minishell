@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_dispatch.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:29 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/17 18:04:25 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:38:37 by rberdkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	run_builtin(char **args, t_shell *shell, t_cleanup_data *data)
 	if (!ft_strcmp(args[0], "echo"))
 		return (builtin_echo(args));
 	if (!ft_strcmp(args[0], "pwd"))
-		return (builtin_pwd());
+		return (builtin_pwd(shell));
 	if (!ft_strcmp(args[0], "cd"))
 		return (builtin_cd(args, shell));
 	if (!ft_strcmp(args[0], "env"))
