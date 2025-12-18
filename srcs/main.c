@@ -45,22 +45,38 @@ static void	execute_commands(t_cmd *cmds, t_shell *shell, char *l, t_token *t)
 	g_signal = 0;
 }
 
+static int	handle_line(char **line, t_shell *shell)
+{
+	*line = readline("minishell> ");
+	if (!*line)
+	{
+		printf("exit\n");
+		return (0);
+	}
+	if (g_signal == SIGINT && **line == '\0')
+	{
+		shell->last_exit_status = 130;
+		g_signal = 0;
+		free(*line);
+		return (-1);
+	}
+	g_signal = 0;
+	return (1);
+}
+
 static void	main_loop(t_shell *shell)
 {
 	char	*line;
 	t_token	*tokens;
 	t_cmd	*cmds;
+	int		status;
 
 	while (1)
 	{
-		g_signal = 0;
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
+		status = handle_line(&line, shell);
+		if (status == 0)
 			break ;
-		}
-		if (g_signal == SIGINT && handle_signal_interrupt(shell, line))
+		if (status == -1)
 			continue ;
 		if (!process_input(line, &tokens, &cmds))
 		{
