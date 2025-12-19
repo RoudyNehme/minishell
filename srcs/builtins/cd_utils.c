@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 12:32:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 11:47:01 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:26:46 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ int	get_path_index(char **envp, char *key)
 	i = 0;
 	while (envp[i])
 	{
-		/* Case 1: KEY=VALUE */
 		if (ft_strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
 			return (i);
-		/* Case 2: KEY (no value) */
 		if (ft_strcmp(envp[i], key) == 0)
 			return (i);
 		i++;

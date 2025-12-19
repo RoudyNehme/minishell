@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:53:44 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 16:03:42 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/19 01:07:34 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ static int	process_single_heredoc(t_redir *redir, t_shell *shell)
 		return (handle_fork_error(redir, shell));
 	if (pid == 0)
 		heredoc_child_process(redir, delimiter, should_expand, shell);
+	setup_ignore_signals();
 	waitpid(pid, &status, 0);
+	setup_interactive_signals();
 	return (handle_heredoc_status(status, redir, delimiter, shell));
 }
 
