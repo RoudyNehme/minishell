@@ -64,10 +64,11 @@ t_token	*tokenizer(char *line) // takes the user input and loops until the end (
 			break ;
 		if (is_trailing_operator(line, i))
 		{
+			free_tokens(head);
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			ft_putchar_fd(line[i], 2);
 			ft_putstr_fd("'\n", 2);
-			return (NULL) ;
+			return (NULL);
 		}
 		tokenizer_helper(&head, line, &i);
 	}
