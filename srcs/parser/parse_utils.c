@@ -6,12 +6,12 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:55:23 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 13:55:45 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:39:58 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-// create the cmd struct and assign its args redirs and next to NULL (will modify later)
+
 t_cmd	*create_cmd(void)
 {
 	t_cmd	*new;
@@ -25,7 +25,6 @@ t_cmd	*create_cmd(void)
 	return (new);
 }
 
-// add the cmd at the end of the list where next = null
 void	add_cmd(t_cmd **head, t_cmd *new)
 {
 	t_cmd	*current;
@@ -41,7 +40,6 @@ void	add_cmd(t_cmd **head, t_cmd *new)
 	current->next = new;
 }
 
-// same as create_cmd
 t_redir	*create_redir(t_token_type type, char *file)
 {
 	t_redir	*new;
@@ -49,15 +47,14 @@ t_redir	*create_redir(t_token_type type, char *file)
 	new = malloc(sizeof(t_redir));
 	if (!new)
 		return (NULL);
-	new->type = type; // to get which type of redir (passed as param)
-	new->file = ft_strdup(file); // here it copies the file name (cat < "in.txt" > "out.txt")
+	new->type = type;
+	new->file = ft_strdup(file);
 	if (!new->file)
-		return (free(new), NULL); // if strdup failed it frees the previously allocated memmory and returns NULL
+		return (free(new), NULL);
 	new->next = NULL;
 	return (new);
 }
 
-// like add_cmd jusr for redirections
 void	add_redir(t_redir **head, t_redir *new)
 {
 	t_redir	*current;
@@ -73,7 +70,6 @@ void	add_redir(t_redir **head, t_redir *new)
 	current->next = new;
 }
 
-// counts args (only words)
 int	count_args(t_token *tokens)
 {
 	int	count;

@@ -6,15 +6,12 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:36:32 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/16 11:38:25 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:35:49 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * Validates if the given argument is a valid identifier for export.
- */
 int	check_arg_validity_export(char *arg)
 {
 	int	index;
@@ -37,9 +34,6 @@ int	check_arg_validity_export(char *arg)
 	return (1);
 }
 
-/**
- * Extracts and returns the key from a given string.
- */
 char	*get_key(char *str)
 {
 	int	i;
@@ -50,10 +44,6 @@ char	*get_key(char *str)
 	return (ft_substr(str, 0, i));
 }
 
-/**
- * Extracts, duplicates, and returns the value from a given string.
- * If no value is provided, NULL is returned.
- */
 char	*get_value(char *str)
 {
 	int	i;
@@ -66,9 +56,6 @@ char	*get_value(char *str)
 	return (ft_strdup(str + i + 1));
 }
 
-/**
- * Sorts the environment variables lexicographically in place.
- */
 void	sort_env(char **envp)
 {
 	int		i;
@@ -95,9 +82,6 @@ void	sort_env(char **envp)
 	}
 }
 
-/**
- * Duplicates, sorts environment variables lexicographically, and prints them.
- */
 void	print_export(char **envp)
 {
 	char	**envp_copy;
@@ -105,13 +89,13 @@ void	print_export(char **envp)
 	char	*key;
 	char	*value;
 
-	envp_copy = dup_env(envp); /* Utility function */
+	envp_copy = dup_env(envp);
 	sort_env(envp_copy);
 	i = 0;
 	while (envp_copy[i])
 	{
 		key = get_key(envp_copy[i]);
-		value = get_value(envp_copy[i]); /* NULL if no '=' exists */
+		value = get_value(envp_copy[i]);
 		if (value == NULL)
 			printf("declare -x %s\n", key);
 		else

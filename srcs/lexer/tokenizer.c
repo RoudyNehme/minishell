@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/19 02:26:44 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:44:03 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	skip_whitespace(char *line, int *i) // skip whitespace func
+static void	skip_whitespace(char *line, int *i)
 {
 	while (line[*i] == ' ' || line[*i] == '\t')
 		(*i)++;
@@ -23,7 +23,7 @@ static int	bad_operator(char c)
 	return (c == '|' || c == '.' || c == '\\' || c == '/');
 }
 
-static int is_trailing_operator(char *line, int i)
+static int	is_trailing_operator(char *line, int i)
 {
 	if (!bad_operator(line[i]))
 		return (0);
@@ -33,7 +33,7 @@ static int is_trailing_operator(char *line, int i)
 	return (!line[i]);
 }
 
-static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the input if operator quoted(double ""or single '') or just naked word
+static void	tokenizer_helper(t_token **head, char *line, int *i)
 {
 	char	*word;
 
@@ -50,7 +50,7 @@ static void	tokenizer_helper(t_token **head, char *line, int *i) // handles the 
 	}
 }
 
-t_token	*tokenizer(char *line) // takes the user input and loops until the end ('\0'); returns the head pointer to the first token of the list
+t_token	*tokenizer(char *line)
 {
 	t_token	*head;
 	int		i;
@@ -62,7 +62,7 @@ t_token	*tokenizer(char *line) // takes the user input and loops until the end (
 		skip_whitespace(line, &i);
 		if (!line[i])
 			break ;
-		if (is_trailing_operator(line, i)) // temp until pipes are done so we can test
+		if (is_trailing_operator(line, i))
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			ft_putchar_fd(line[i], 2);

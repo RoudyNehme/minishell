@@ -6,16 +6,12 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 08:58:08 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 14:46:30 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:35:40 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * Duplicates the environment variables into a new array.
- * Returns a copy of the environment or NULL on error.
- */
 char	**dup_env(char **real_env)
 {
 	int		size;
@@ -38,7 +34,6 @@ char	**dup_env(char **real_env)
 	return (copy_env);
 }
 
-/* Builds either "KEY" or "KEY=VALUE" */
 static char	*build_env_entry(char *key, char *path)
 {
 	char	*temp;
@@ -54,7 +49,6 @@ static char	*build_env_entry(char *key, char *path)
 	return (final);
 }
 
-/* Replaces an existing KEY or VALUE in envp */
 static void	update_existing_env(t_shell *shell, int index, char *entry)
 {
 	free(shell->envp[index]);

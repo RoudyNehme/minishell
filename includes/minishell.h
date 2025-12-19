@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 18:16:07 by rberdkan          #+#    #+#             */
-/*   Updated: 2025/12/18 22:32:37 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/19 02:46:22 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,6 @@ char		*get_key(char *str);
 char		*get_value(char *str);
 void		free_resources(t_shell *shell, char *line, t_token *tokens,
 				t_cmd *cmds);
-// void		exit_shell(int code, t_shell *shell, char *line, t_token *tokens,
-// 				t_cmd *cmds);
 int			count_exit_args(char **args);
 int			calculate_exit_code(const char *arg);
 long long	ft_atoll(const char *str);
@@ -157,6 +155,7 @@ int			is_valid_number(const char *str, int *exit_code);
 int			wrap_exit_code(const char *arg);
 int			ft_is_valid_long_long(char *str, long long *result);
 void		cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell);
+char		*get_parent_from_pwd(t_shell *shell);
 
 // --------------- EXECUTION ------------------
 char		**ft_split_path(const char *path);

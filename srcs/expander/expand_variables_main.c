@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:25:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 14:01:43 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:38:19 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ char	*expand_variable(char *str, t_shell *shell)
 	char	*result;
 	int		i;
 
-	result = ft_strdup(""); // cleaner than manually allocating plus null terminated
+	result = ft_strdup("");
 	if (!result)
 		return (NULL);
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && should_expand(str, i)) // check for unclosed single quote before the $
+		if (str[i] == '$' && should_expand(str, i))
 		{
 			result = process_dollar(result, str, &i, shell);
 			if (!result)
@@ -54,7 +54,7 @@ char	*expand_variable(char *str, t_shell *shell)
 		}
 		else
 		{
-			result = append_char(result, str[i]); // add the current char null terminated to result
+			result = append_char(result, str[i]);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 13:18:02 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 15:03:25 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:39:01 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	expand_command_args(t_cmd *cmd, t_shell *shell)
 	char	*expanded;
 
 	i = 0;
-	while (cmd->args[i]) // looping over parsed command args
+	while (cmd->args[i])
 	{
 		expanded = expand_arg(cmd->args[i], shell);
 		if (expanded)
@@ -69,7 +69,6 @@ static void	expand_redirections(t_redir *redirs, t_shell *shell)
 	}
 }
 
-// main expansion function
 void	expand_commands(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*current;

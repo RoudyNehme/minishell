@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 21:22:31 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 14:02:14 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:38:43 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ int	should_expand(char *str, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (str[j] == '\'' && (j == 0 || str[j - 1] != '\\')) // checks for unclosed quote before the $
+		if (str[j] == '\'' && (j == 0 || str[j - 1] != '\\'))
 			in_single_quote = !in_single_quote;
 		j++;
 	}
 	if (in_single_quote)
 		return (0);
-	if (i > 0 && str[i - 1] == '\\') // checks if the char before the $ is a '\'
+	if (i > 0 && str[i - 1] == '\\')
 		return (0);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rberdkan <rberdkan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 10:59:13 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/18 23:38:46 by rberdkan         ###   ########.fr       */
+/*   Updated: 2025/12/19 02:31:26 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	cleanup(char *line, t_token *tokens, t_cmd *cmds, t_shell *shell)
 {
-    (void)shell;  // ← ADD THIS LINE
-    if (line)
-        free(line);
-    if (tokens)
-        free_tokens(tokens);
-    if (cmds)
-        free_cmds(cmds);
+	(void)shell;
+	if (line)
+		free(line);
+	if (tokens)
+		free_tokens(tokens);
+	if (cmds)
+		free_cmds(cmds);
 }
 
 int	count_exit_args(char **args)

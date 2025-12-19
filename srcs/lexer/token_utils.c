@@ -6,27 +6,24 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:19:54 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/16 12:57:47 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:44:21 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_seperator(char c) // returns 1 if c is any of the seperators
+int	is_seperator(char c)
 {
-	return (c == ' ' || c == '\t' || c == '|' || c == '>' || c == '<' || c == '\0');
-}
-// old version
-// int is_operator(char c)
-// {
-// 	return (c == '<' || c == '>');
-// }
-int	is_operator(char c)
-{
-	return (c == '<' || c == '>' || c == '|'); // ✓ Include pipe
+	return (c == ' ' || c == '\t' || c == '|'
+		|| c == '>' || c == '<' || c == '\0');
 }
 
-t_token	*create_token(t_token_type token_type, char *value) // create a token
+int	is_operator(char c)
+{
+	return (c == '<' || c == '>' || c == '|');
+}
+
+t_token	*create_token(t_token_type token_type, char *value)
 {
 	t_token	*new;
 
@@ -36,12 +33,12 @@ t_token	*create_token(t_token_type token_type, char *value) // create a token
 	new->type = token_type;
 	new->value = ft_strdup(value);
 	if (!new->value)
-		return (free(new), NULL); // if strdup failed it frees the previously allocated memmory and returns NULL
+		return (free(new), NULL);
 	new->next = NULL;
 	return (new);
 }
 
-void	add_token(t_token **head, t_token *new) // add token...
+void	add_token(t_token **head, t_token *new)
 {
 	t_token	*current;
 
@@ -56,7 +53,7 @@ void	add_token(t_token **head, t_token *new) // add token...
 	current->next = new;
 }
 
-void	free_tokens(t_token *head) // free func for tokens
+void	free_tokens(t_token *head)
 {
 	t_token	*temp;
 
@@ -67,32 +64,4 @@ void	free_tokens(t_token *head) // free func for tokens
 		free(temp->value);
 		free(temp);
 	}
-}
-
-void	print_tokens(t_token *head) // debug func
-{
-	t_token	*current;
-	char	*type_str;
-
-	current = head;
-	while (current)
-	{
-		if (current->type == WORD)
-			type_str = "WORD";
-		else if (current->type == PIPE)
-			type_str = "PIPE";
-		else if (current->type == REDIR_APPEND)
-			type_str = "REDIR_APPEND";
-		else if (current->type == HEREDOC)
-			type_str = "HEREDOC";
-		else if (current->type == REDIR_IN)
-			type_str = "REDIR_IN";
-		else if (current->type == REDIR_OUT)
-			type_str = "REDIR_OUT";
-		else
-			type_str = "UNKNOWN";
-		printf("[%s: \"%s\"] ", type_str, current->value);
-		current = current->next;
-	}
-	printf("\n");
 }

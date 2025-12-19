@@ -6,11 +6,27 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 12:32:38 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/19 01:26:46 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:35:00 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_parent_from_pwd(t_shell *shell)
+{
+	char	*pwd;
+	char	*last_slash;
+	char	*parent;
+
+	pwd = get_env_value("PWD", shell->envp);
+	if (!pwd)
+		return (NULL);
+	last_slash = ft_strrchr(pwd, '/');
+	if (!last_slash || last_slash == pwd)
+		return (ft_strdup("/"));
+	parent = ft_substr(pwd, 0, last_slash - pwd);
+	return (parent);
+}
 
 char	*get_home_path(char **envp)
 {

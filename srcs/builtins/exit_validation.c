@@ -6,13 +6,13 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 11:03:03 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/19 02:25:46 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:31:05 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int parse_sign_and_skip(char *str, int *i, int *sign)
+static int	parse_sign_and_skip(char *str, int *i, int *sign)
 {
 	*sign = 1;
 	while (str[*i] == ' ' || str[*i] == '\t')
@@ -26,10 +26,10 @@ static int parse_sign_and_skip(char *str, int *i, int *sign)
 	return (!str[*i] || !ft_isdigit(str[*i]));
 }
 
-int ft_is_valid_long_long(char *str, long long *result)
+int	ft_is_valid_long_long(char *str, long long *result)
 {
-	int i;
-	int sign;
+	int	i;
+	int	sign;
 
 	i = 0;
 	*result = 0;
