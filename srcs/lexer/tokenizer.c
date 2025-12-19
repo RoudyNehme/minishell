@@ -6,7 +6,7 @@
 /*   By: rnehme <rnehme@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 11:07:42 by rnehme            #+#    #+#             */
-/*   Updated: 2025/12/19 02:44:03 by rnehme           ###   ########.fr       */
+/*   Updated: 2025/12/19 20:21:16 by rnehme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_token	*tokenizer(char *line)
 			break ;
 		if (is_trailing_operator(line, i))
 		{
+			free_tokens(head);
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			ft_putchar_fd(line[i], 2);
 			ft_putstr_fd("'\n", 2);
